@@ -4,29 +4,29 @@ import axios from 'axios';
 export default class Create extends Component {
     constructor(props) {
         super(props);
-        this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeEngine = this.onChangeEngine.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            name: ''
+            engine: ''
         }
     }
-    onChangeName(e) {
+    onChangeEngine(e) {
         this.setState({
-            name: e.target.value
+            engine: e.target.value
         });
     }
     onSubmit(e) {
         e.preventDefault();
-        const person_details = {
-            name: this.state.name
+        const car_details = {
+            engine: this.state.engine
         }
         
-        axios.post('http://localhost:4000/test/add', person_details)
+        axios.post('http://localhost:4000/cars-api/add', car_details)
             .then(res => console.log(res.data));
 
         this.setState({
-            name: ''
+            engine: ''
         })
 
     }
@@ -35,11 +35,11 @@ export default class Create extends Component {
             <div>
                 <form onSubmit={this.onSubmit}>
                     <div>
-                        <label>Name:  </label>
-                        <input type="text" value={this.state.name} onChange={this.onChangeName}/>
+                        <label>Engine:  </label>
+                        <input type="text" value={this.state.engine} onChange={this.onChangeEngine}/>
                     </div>
                     <div>
-                        <input type="submit" value="Add Person"/>
+                        <input type="submit" value="Add Car"/>
                     </div>
                 </form>
             </div>

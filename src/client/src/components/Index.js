@@ -5,19 +5,19 @@ import TableRow from './TableRow';
 export default class Index extends Component {
     constructor(props) {
         super(props);
-        this.state = {persons: []};
+        this.state = {cars: []};
     }
     componentDidMount() {
-        axios.get('http://localhost:4000/test')
+        axios.get('http://localhost:4000/cars-api/list')
             .then(response => {
-                this.setState({ persons: response.data });
+                this.setState({ cars: response.data });
             })
         .catch(function (error) {
             console.error(error);
         })
     }
     tabRow(){
-        return this.state.persons.map(function(object, i){
+        return this.state.cars.map(function(object, i){
             return <TableRow obj={object} key={i} />;
         });
     }
@@ -29,7 +29,7 @@ export default class Index extends Component {
               <thead>
                 <tr>
                   <td>ID</td>
-                  <td>Name</td>
+                  <td>Engine</td>
                 </tr>
               </thead>
               <tbody>

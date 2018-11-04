@@ -5,9 +5,14 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "pg": "^7.6.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.41.0"
   },
-  "scripts": {},
+  "scripts": {
+    "start": "node server.js"
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
