@@ -11,15 +11,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyCGJJe-Odmh3SfBgM8kh5I1kJbLMw-4UYg",
-      authDomain: "car-rental-f91c1.firebaseapp.com",
-      databaseURL: "https://car-rental-f91c1.firebaseio.com",
-      projectId: "car-rental-f91c1",
-      storageBucket: "car-rental-f91c1.appspot.com",
-      messagingSenderId: "1006931104792"
-    };
-    firebase.initializeApp(config);
+    const firebase_config = require('../firebase_config');
+    firebase.initializeApp(firebase_config);
   }
 
   render() {
