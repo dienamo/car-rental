@@ -1,13 +1,15 @@
 {
-  "name": "car-rental-client",
+  "name": "firebase-test",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.18.0",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
+    "bootstrap": "^4.1.3",
+    "firebase": "^5.5.7",
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.1"
+    "react-scripts": "2.1.1",
+    "reactstrap": "^6.5.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -25,6 +27,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "nodemon": "^1.18.5"
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^4.0.2"
   }
 }
