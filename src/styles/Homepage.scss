@@ -1,4 +1,19 @@
 .homepage {
-    background: silver;
-    height: 50px;
+
+	//background: silver;
+	//height: 50px;
+	.left {
+		background: silver;
+		//float:right;
+		border: 1px solid black;
+
+		img {
+			width: 100%;
+		}
+	}
+
+	.right {
+		//background: green;
+		//float: left;
+	}
 }
