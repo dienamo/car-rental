@@ -1,19 +1,24 @@
 .homepage {
 
-  //background: silver;
-  //height: 50px;
   .left {
-    background: silver;
-    //float:right;
-    border: 1px solid black;
+    background: #eaeaea;
+    border: 1px solid #adadad;
+    padding: 1rem;
+    margin: 2rem;
+    border-radius: 2px;
+    box-shadow: 1px 1px 7px #cacaca;
+    h3 {
+      font-size: 1.25rem;
+    }
   }
 
   .right {
-
-    //background: green;
-    //float: left;
+    margin: 2rem 0;
+    h2 {
+      font-size: 1.5rem;
+    }
     img {
-      width: 100%;
+      width: 90%;
       background: black;
 
     }
