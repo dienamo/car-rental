@@ -16,6 +16,7 @@ import Administration from './Administration';
 import Homepage from './Homepage';
 import About from './About';
 import Contact from './Contact';
+import Results from './Results';
 
 class App extends React.Component {
 
@@ -55,6 +56,7 @@ class App extends React.Component {
               <Route exact path="/about" component={About} />
               <Route exact path="/contact" component={Contact} />
               <Route exact path='/administration' render={() => <Administration firebase={firebase} />} />
+              <Route exact path="/results" component={Results} />
             </Switch>
           </Container>
         </div>
