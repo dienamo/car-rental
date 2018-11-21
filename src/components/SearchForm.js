@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, FormGroup, Label, Input, Card, CardBody, CardTitle, Row, Col } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Row, Col, Button } from 'reactstrap';
 
 export default class SearchForm extends React.Component {
   constructor(props) {
@@ -9,39 +9,50 @@ export default class SearchForm extends React.Component {
   render() {
     return (
       <div className="search-form">
-        <Card>
-          <CardBody>
-            <CardTitle>{this.props.headline}</CardTitle>
-          </CardBody>
-          <CardBody>
-            <Form>
-              <FormGroup>
-                <Row>
-                  <Label for="exampleSelect" className="col-sm-6">Brand</Label>
-                  <Col sm={6}>
-                    <Input type="select" name="select" id="car-brands">
-                      <option>Škoda</option>
-                      <option>Tesla</option>
-                    </Input>
-                  </Col>
-                </Row>
-              </FormGroup>
-              <FormGroup>
-                <Label for="exampleSelect">Model</Label>
-                <Input type="select" name="select" id="car-models">
-                  <option>Fabia</option>
-                  <option>Octavia</option>
-                </Input>
-              </FormGroup>
-              <label for="exampleFormControlInput1">Email address</label>
-              <FormGroup>
-                <input type="email" class="form-control"
-                  id="exampleFormControlInput1"
-                  placeholder="name@example.com" />
-              </FormGroup>
-            </Form>
-          </CardBody>
-        </Card>
+        <h3>{this.props.title}</h3>
+        <form>
+          <div className="car-classes">
+            <div className="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="class-economic" value="economic" />
+              <label class="form-check-label" for="class-economic">Economic</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="class-middle" value="middle" />
+              <label class="form-check-label" for="class-middle">Middle</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="class-luxury" value="luxury" />
+              <label class="form-check-label" for="class-luxury">Luxury</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="class-suv" value="suv" />
+              <label class="form-check-label" for="class-suv">SUV</label>
+            </div>
+          </div>
+          <div className="row form-group">
+            <div class="col-md-4">
+              <label>Car brand</label>
+            </div>
+            <div class="col-md-8">
+              <Input type="select" name="select" id="car-brand">
+                <option>Skoda</option>
+                <option>Tesla</option>
+              </Input>
+            </div>
+          </div>
+          <div className="row form-group">
+            <div class="col-md-4">
+              <label>Car model</label>
+            </div>
+            <div class="col-md-8">
+              <Input type="select" name="select" id="car-brand">
+                <option>Fabia</option>
+                <option>Octavia</option>
+              </Input>
+            </div>
+          </div>
+          <Button>Search</Button>
+        </form>
       </div>
     )
   }

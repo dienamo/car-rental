@@ -1,5 +1,21 @@
 .search-form {
-  //background: silver;
-  //border: 1px solid black;
+  background: #eaeaea;
+  border: 1px solid #adadad;
+  margin: 2rem;
+  padding: 1rem;
+  border-radius: 2px;
+  box-shadow: 1px 1px 7px #cacaca;
+
+  h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .car-classes {
+    margin: 1rem 0;
+    background: #fbfbfb;
+    padding: .5rem;
+    text-align: center;
+  }
 
 }
