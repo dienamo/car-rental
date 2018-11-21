@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'reactstrap';
+import CarThumb from './CarThumb';
 
 export default class TopCars extends React.Component {
   render() {
@@ -8,23 +9,17 @@ export default class TopCars extends React.Component {
         <h3>Top Cars - {this.props.carClass}</h3>
         <Row>
           <Col sm={12} lg={3}>
-            <img src="./img/dummy.jpg" alt="car" />
+            <CarThumb />
           </Col>
           <Col sm={12} lg={3}>
-            <img src="./img/dummy.jpg" alt="car" />
+            <CarThumb />
           </Col>
           <Col sm={12} lg={3}>
-            <img src="./img/dummy.jpg" alt="car" />
+            <CarThumb />
           </Col>
           <Col sm={12} lg={3}>
-            <img src="./img/dummy.jpg" alt="car" />
+            <CarThumb />
           </Col>
-          {/* <Col sm={12} lg={2}>
-            <img src="./img/dummy.jpg" alt="car" />
-          </Col>
-          <Col sm={12} lg={2}>
-            <img src="./img/dummy.jpg" alt="car" />
-          </Col> */}
         </Row>
       </div>
     )

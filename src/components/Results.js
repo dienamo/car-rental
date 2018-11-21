@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchForm from './SearchForm';
+import CarThumb from './CarThumb';
 
 export default class Results extends React.Component {
   constructor(props) {
@@ -19,9 +20,26 @@ export default class Results extends React.Component {
           </div>
           <div className="col-xs-12 col-md-8">
             <main>
-              <article>
-                <header>Article header</header>
-              </article>
+              <div className="row">
+                <div className="col-md-4">
+                  <CarThumb />
+                </div>
+                <div className="col-md-4">
+                  <CarThumb />
+                </div>
+                <div className="col-md-4">
+                  <CarThumb />
+                </div>
+                <div className="col-md-4">
+                  <CarThumb />
+                </div>
+                <div className="col-md-4">
+                  <CarThumb />
+                </div>
+                <div className="col-md-4">
+                  <CarThumb />
+                </div>
+              </div>
             </main>
           </div>
         </div>
