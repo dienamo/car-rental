@@ -36,7 +36,7 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <Navbar color="light" light expand="xs">
+          <Navbar expand="xs">
             <NavbarBrand href="/">Car Rental</NavbarBrand>
             <NavbarToggler onClick={() => this.toggleNav()} />
             <Collapse isOpen={this.state.openNav} navbar>
@@ -59,6 +59,11 @@ class App extends React.Component {
               <Route exact path="/results" component={Results} />
             </Switch>
           </Container>
+
+          <footer>
+            © 2018 Copyright: Car Rental Group
+          </footer>
+
         </div>
       </Router>
     );
