@@ -3,12 +3,15 @@ import SearchForm from './SearchForm';
 import CarThumb from './CarThumb';
 
 export default class Results extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {};
+  // }
 
   render() {
+    
+    console.log('State:', this.props.location.state);
+
     return (
       <div className="results">
         <h1 className="page-heading">Search results</h1>

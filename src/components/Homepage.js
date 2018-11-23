@@ -3,7 +3,6 @@ import SearchForm from './SearchForm';
 import TopCars from './TopCars';
 import {
   Row, Col,
-  Form, FormGroup, Label, Input, FormText, Button
 } from 'reactstrap';
 
 export default class Homepage extends React.Component {
@@ -16,12 +15,12 @@ export default class Homepage extends React.Component {
       <div className="homepage">
         <Row>
           <Col xs={{ size: 12, order: 2 }} md={{ size: 6, order: 1 }}>
-            <div class="left">
+            <div className="left">
               <SearchForm title="Car Search" />
             </div>
           </Col>
           <Col xs={{ size: 12, order: 1 }} md={{ size: 6, order: 2 }}>
-            <div class="right">
+            <div className="right">
               <h1 className="page-heading">Welcome!</h1>
               <h2>Here you can search and rent car of your dreams!</h2>
               <img src="./img/stock.jpg" alt="stock" />
