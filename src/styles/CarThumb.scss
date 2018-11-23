@@ -1,5 +1,20 @@
 .car-thumb {
+  margin-bottom: 1rem;
+    border: 1px solid #dedede;
+    border-radius: 2px;
+    background: #f9f9f9;
+    padding: .5rem;
   img {
     width: 100%;
+  }
+
+  .text {
+    padding-top: .5rem;
+    text-align: center;
+
+    .price {
+      color: red;
+      font-size: 1.1rem;
+    }
   }
 }

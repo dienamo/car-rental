@@ -5,7 +5,10 @@ export default class CarThumb extends React.Component {
     return (
       <article className="car-thumb">
         <img src="./img/dummy.jpg" alt="car" />
-        <header>Car name</header>
+        <div className="text">
+          <header>Car name</header>
+          <span className="price">10€</span>
+        </div>
       </article>
     )
   }
