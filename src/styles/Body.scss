@@ -31,9 +31,22 @@ code {
     monospace;
 }
 
-.page-heading {
-  margin: 1rem 0;
-  font-size: 2.25rem;
+.page-heading-wrap {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+
+  .page-heading {
+    margin: 0;
+    font-size: 2rem;
+    display: inline-block;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .page-heading {
+    font-size: 1.75rem;
+  }
 }
 
 .navbar {

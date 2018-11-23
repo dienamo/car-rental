@@ -7,7 +7,7 @@ export default class SearchForm extends React.Component {
     super(props);
     this.state = {
       redirect: false,
-      carClasses: {economic: false, middle: false, luxury: false, suv: false}
+      carClasses: {economic: true, middle: true, luxury: false, suv: false}
     };
     this.submitForm = this.submitForm.bind(this);
     this.handleClassChange = this.handleClassChange.bind(this);
@@ -113,7 +113,7 @@ export default class SearchForm extends React.Component {
                 </Input>
               </div>
             </div>
-            <Button>Search</Button>
+            <button className="btn btn-primary">Search</button>
           </form>
         </div>
       </React.Fragment>

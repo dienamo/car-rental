@@ -10,11 +10,18 @@
     margin-bottom: 1.25rem;
   }
 
+  form {
+    overflow: hidden;
+    .btn {
+      float: right;
+    }
+  }
+
   .car-classes {
     margin: 1rem 0;
 
     .class-checked {
-      background: #6b9be8;
+      background: #007bff;
       color: white;
     }
 
@@ -31,13 +38,13 @@
     }
 
     .class-check {
-      border: 1px solid #c7c7c7;
-      border-radius: 5px;
+      border: 1px solid #007bff;
+      border-radius: .25rem;
       cursor: pointer;
       position: relative;
       user-select: none;
-      padding: .5rem;
-      margin-right: .5rem;
+      padding: 0.375rem 0.75rem;
+      margin: .25rem;
 
 
 
