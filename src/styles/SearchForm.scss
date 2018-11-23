@@ -12,17 +12,34 @@
 
   .car-classes {
     margin: 1rem 0;
-    background: #fbfbfb;
-    padding: .5rem;
-    text-align: center;
+
+    .class-checked {
+      background: #6b9be8;
+      color: white;
+    }
+
+    .check-icon {
+      opacity: 0;
+      position: absolute;
+      width: 15px;
+      top: -5px;
+      left: -5px;
+    }
+
+    .check-icon-checked {
+      opacity: 100 !important;
+    }
 
     .class-check {
-      background: silver;
-      border: 1px solid black;
-      border-radius: 2px;
+      border: 1px solid #c7c7c7;
+      border-radius: 5px;
       cursor: pointer;
       position: relative;
       user-select: none;
+      padding: .5rem;
+      margin-right: .5rem;
+
+
 
       input {
         opacity: 0;

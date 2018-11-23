@@ -6,16 +6,24 @@ export default class SearchForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      redirect: false
+      redirect: false,
+      carClasses: {economic: false, middle: false, luxury: false, suv: false}
     };
     this.submitForm = this.submitForm.bind(this);
+    this.handleClassChange = this.handleClassChange.bind(this);
   }
   submitForm(e) {
     e.preventDefault();
     this.setState({ redirect: true });
   }
+  handleClassChange(e) {
+    const target = e.target;
+    const checked = target.checked;
+    let prev = {...this.state.carClasses};
+    prev[target.name] = checked;
+    this.setState({carClasses: prev});
+  }
   render() {
-    //const { from } = this.props.location.state || '/'
     return (
       <React.Fragment>
         
@@ -30,29 +38,58 @@ export default class SearchForm extends React.Component {
           <h3>{this.props.title}</h3>
           <form onSubmit={this.submitForm}>
             <div className="car-classes">
-
-              <label className="class-check">
-                <input className="form-check-input" type="checkbox" id="class-economic" value="economic" />
+              <label className={this.state.carClasses['economic'] ? 'class-check class-checked' : 'class-check'} 
+                htmlFor="class-economic">
+                <img 
+                  className={this.state.carClasses['economic'] ? 'check-icon check-icon-checked' : 'check-icon'}
+                  alt="checked" 
+                  src="./img/ok.png" />
+                <input
+                  type="checkbox" id="class-economic" 
+                  name="economic"
+                  onChange={this.handleClassChange}
+                  checked={this.state.carClasses['economic']} />
                 Economic
               </label>
-
-              {/* <div className="form-check form-check-inline">
-                <input className="form-check-input" type="checkbox" id="class-economic" value="economic" />
-                <label className="form-check-label" htmlFor="class-economic">Economic</label>
-              </div> */}
-
-              <div className="form-check form-check-inline">
-                <input className="form-check-input" type="checkbox" id="class-middle" value="middle" />
-                <label className="form-check-label" htmlFor="class-middle">Middle</label>
-              </div>
-              <div className="form-check form-check-inline">
-                <input className="form-check-input" type="checkbox" id="class-luxury" value="luxury" />
-                <label className="form-check-label" htmlFor="class-luxury">Luxury</label>
-              </div>
-              <div className="form-check form-check-inline">
-                <input className="form-check-input" type="checkbox" id="class-suv" value="suv" />
-                <label className="form-check-label" htmlFor="class-suv">SUV</label>
-              </div>
+              <label className={this.state.carClasses['middle'] ? 'class-check class-checked' : 'class-check'} 
+                htmlFor="class-middle">
+                <img 
+                  className={this.state.carClasses['middle'] ? 'check-icon check-icon-checked' : 'check-icon'}
+                  alt="checked" 
+                  src="./img/ok.png" />
+                <input
+                  type="checkbox" id="class-middle" 
+                  name="middle"
+                  onChange={this.handleClassChange}
+                  checked={this.state.carClasses['middle']} />
+                Middle
+              </label>
+              <label className={this.state.carClasses['luxury'] ? 'class-check class-checked' : 'class-check'} 
+                htmlFor="class-luxury">
+                <img 
+                  className={this.state.carClasses['luxury'] ? 'check-icon check-icon-checked' : 'check-icon'}
+                  alt="checked" 
+                  src="./img/ok.png" />
+                <input
+                  type="checkbox" id="class-luxury" 
+                  name="luxury"
+                  onChange={this.handleClassChange}
+                  checked={this.state.carClasses['luxury']} />
+                Luxury
+              </label>
+              <label className={this.state.carClasses['suv'] ? 'class-check class-checked' : 'class-check'} 
+                htmlFor="class-suv">
+                <img 
+                  className={this.state.carClasses['suv'] ? 'check-icon check-icon-checked' : 'check-icon'}
+                  alt="checked" 
+                  src="./img/ok.png" />
+                <input
+                  type="checkbox" id="class-suv" 
+                  name="suv"
+                  onChange={this.handleClassChange}
+                  checked={this.state.carClasses['suv']} />
+                SUV
+              </label>
             </div>
             <div className="row form-group">
               <div className="col-md-4">
