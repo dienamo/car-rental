@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Button } from 'reactstrap';
+import { Input } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 
 export default class SearchForm extends React.Component {
@@ -96,10 +96,11 @@ export default class SearchForm extends React.Component {
                 <label>Car brand</label>
               </div>
               <div className="col-md-8">
-                <Input type="select" name="select" id="car-brand">
+                <select className="form-control" name="select" id="car-brand">
+                  <option>All</option>
                   <option>Skoda</option>
                   <option>Tesla</option>
-                </Input>
+                </select>
               </div>
             </div>
             <div className="row form-group">

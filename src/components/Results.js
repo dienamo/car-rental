@@ -13,11 +13,9 @@ export default class Results extends React.Component {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
   }
-
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
   }
-
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
@@ -37,9 +35,6 @@ export default class Results extends React.Component {
     return null;
   }
   render() {
-
-    console.log('State:', this.state);
-
     return (
       <div className="results">
         <div className="page-heading-wrap">
@@ -54,22 +49,40 @@ export default class Results extends React.Component {
           <div className="col-xs-12 col-md-8">
             <main>
               <div className="row">
-                <div className="col-md-4">
+                <div className="col-sm-6 col-lg-4 px-2 grid-item">
                   <CarThumb />
                 </div>
-                <div className="col-md-4">
+                <div className="col-sm-6 col-lg-4 px-2 grid-item">
                   <CarThumb />
                 </div>
-                <div className="col-md-4">
+                <div className="col-sm-6 col-lg-4 px-2 grid-item">
                   <CarThumb />
                 </div>
-                <div className="col-md-4">
+                <div className="col-sm-6 col-lg-4 px-2 grid-item">
                   <CarThumb />
                 </div>
-                <div className="col-md-4">
+                <div className="col-sm-6 col-lg-4 px-2 grid-item">
                   <CarThumb />
                 </div>
-                <div className="col-md-4">
+                <div className="col-sm-6 col-lg-4 px-2 grid-item">
+                  <CarThumb />
+                </div>
+                <div className="col-sm-6 col-lg-4 px-2 grid-item">
+                  <CarThumb />
+                </div>
+                <div className="col-sm-6 col-lg-4 px-2 grid-item">
+                  <CarThumb />
+                </div>
+                <div className="col-sm-6 col-lg-4 px-2 grid-item">
+                  <CarThumb />
+                </div>
+                <div className="col-sm-6 col-lg-4 px-2 grid-item">
+                  <CarThumb />
+                </div>
+                <div className="col-sm-6 col-lg-4 px-2 grid-item">
+                  <CarThumb />
+                </div>
+                <div className="col-sm-6 col-lg-4 px-2 grid-item">
                   <CarThumb />
                 </div>
               </div>
