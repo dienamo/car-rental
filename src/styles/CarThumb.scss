@@ -1,15 +1,21 @@
 .car-thumb {
-  margin-bottom: 1rem;
-    border: 1px solid #dedede;
-    border-radius: 2px;
-    background: #f9f9f9;
-    padding: .5rem;
-  img {
+  border: 1px solid #adadad;
+  border-radius: 3px;
+  background: #f9f9f9;
+  overflow: hidden;
+  box-shadow: 0px 0px 3px #e2e2e2;
+
+  .img-wrap {
+    overflow: hidden;
     width: 100%;
+    margin: 0;
+
+    img {
+      width: 100%;
+    }
   }
 
   .text {
-    padding-top: .5rem;
     text-align: center;
 
     .price {
