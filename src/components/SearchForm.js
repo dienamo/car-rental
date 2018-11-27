@@ -88,19 +88,6 @@ export default class SearchForm extends React.Component {
                   checked={this.state.carClasses['luxury']} />
                 Luxury
               </label>
-              {/* <label className={this.state.carClasses['suv'] ? 'class-check class-checked' : 'class-check'}
-                htmlFor="class-suv">
-                <img
-                  className={this.state.carClasses['suv'] ? 'check-icon check-icon-checked' : 'check-icon'}
-                  alt="checked"
-                  src="./img/ok.png" />
-                <input
-                  type="checkbox" id="class-suv"
-                  name="suv"
-                  onChange={this.handleClassChange}
-                  checked={this.state.carClasses['suv']} />
-                SUV
-              </label> */}
             </fieldset>
             <fieldset className="preferred-brand">
               <legend>Preferred car brand</legend>
