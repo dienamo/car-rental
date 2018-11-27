@@ -1,10 +1,16 @@
 # Car Rental
 
-Small web application for car rental company implemented in React and Firebase.
+Small web application for car rental company implemented in Javascript framework [React](https://reactjs.org/) and cloud service [Firebase](https://firebase.google.com/).
 
-## Local installation
+## Project installation
 
 In the project directory run:
+
+`npm install`
+
+## Start application
+
+After install, in the project directory run:
 
 `npm run start`
 
