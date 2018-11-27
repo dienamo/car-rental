@@ -27,7 +27,7 @@ class Administration extends React.Component {
             <h2>Administration</h2>
             <Nav tabs className="mt-4">
               <NavItem>
-                <NavLink href={props.match.path + "/car-listing"} active={props.location.pathname === "/administration/car-listing"}>Car Listing</NavLink>
+                <NavLink href={props.match.path + "/car-listing"} active={props.location.pathname === "/administration/car-listing" || props.location.pathname === "/administration" || props.location.pathname === "/administration/"}>Car Listing</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href={props.match.path + "/orders"} active={props.location.pathname === "/administration/orders"}>Orders</NavLink>
@@ -36,7 +36,7 @@ class Administration extends React.Component {
           </Col>
         </Row>
         <Switch>
-          <Route exact path={props.match.path} render={CarListingPage} />
+          <Route exact path="/administration" render={CarListingPage} />
           <Route exact path={`${props.match.path}/car-listing`} render={CarListingPage} />
         </Switch>
       </div>
