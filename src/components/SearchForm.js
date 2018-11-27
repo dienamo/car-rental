@@ -1,5 +1,4 @@
 import React from 'react';
-import { Input } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 
 export default class SearchForm extends React.Component {
@@ -139,7 +138,9 @@ export default class SearchForm extends React.Component {
                 </div>
               </div>
               <label htmlFor="pick-up-location">Pick-up location</label>
-              <input className="form-control" id="pick-up-location" />
+              <select className="form-control" id="pick-up-location">
+                <option>Bratislava Airport</option>
+              </select>
             </fieldset>
             <fieldset className="drop-off">
               <legend>Drop-off information</legend>
@@ -154,7 +155,9 @@ export default class SearchForm extends React.Component {
                 </div>
               </div>
               <label htmlFor="drop-off-location">Drop-off location</label>
-              <input className="form-control" id="drop-off-location" />
+              <select className="form-control" id="drop-off-location">
+                <option>Bratislava Airport</option>
+              </select>
             </fieldset>
             <button className="btn btn-primary">Search</button>
           </form>
