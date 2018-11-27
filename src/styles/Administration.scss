@@ -3,4 +3,26 @@
         border-color: #637383 #dee2e6 #fff;
         border-top-width: 2px;
     }
+
+    .form-inline .search-input-field {
+        width: 230px;
+    }
+
+    @media only screen and (max-width: 770px) {
+        .search-input-label {
+            display: none;
+        }
+    }
+
+    @media only screen and (min-width: 576px) and (max-width: 610px) {
+        .form-inline .search-input-field {
+            width: 190px;
+        }
+    }
+
+    @media only screen and (max-width: 575px) {
+        .add-new-car-button, .form-inline .search-input-field, .search-form-submit {
+            width: 100%;
+        }
+    }
 }

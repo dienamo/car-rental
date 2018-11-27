@@ -31,6 +31,18 @@ code {
     monospace;
 }
 
+.custom-container {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 1199px) {
+  .custom-container {
+    padding: 0 30px;
+    width: 100%;
+  }
+}
+
 .page-heading {
   margin: 1rem 0;
   font-size: 2.25rem;

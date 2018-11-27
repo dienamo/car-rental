@@ -3,11 +3,12 @@ import {
   Row, Col,
   Nav, NavItem, NavLink,
 } from 'reactstrap';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, NavLink as RouterNavlink } from 'react-router-dom';
 
 import { attachFirebaseToComponent } from '../helpers/helperFunctions.js';
 
 import CarListing from './CarListingAdmin';
+import Orders from './OrdersAdmin';
 
 class Administration extends React.Component {
   constructor(props) {
@@ -27,18 +28,23 @@ class Administration extends React.Component {
             <h2>Administration</h2>
             <Nav tabs className="mt-4">
               <NavItem>
-                <NavLink href={props.match.path + "/car-listing"} active={props.location.pathname === "/administration/car-listing" || props.location.pathname === "/administration" || props.location.pathname === "/administration/"}>Car Listing</NavLink>
+                <NavLink tag={RouterNavlink} to={props.match.path + "/orders"} active={props.location.pathname === "/administration/orders" || props.location.pathname === "/administration" || props.location.pathname === "/administration/"}>Orders</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href={props.match.path + "/orders"} active={props.location.pathname === "/administration/orders"}>Orders</NavLink>
+                <NavLink tag={RouterNavlink} to={props.match.path + "/car-listing"} active={props.location.pathname === "/administration/car-listing"}>Car Listing</NavLink>
               </NavItem>
             </Nav>
           </Col>
         </Row>
-        <Switch>
-          <Route exact path="/administration" render={CarListingPage} />
-          <Route exact path={`${props.match.path}/car-listing`} render={CarListingPage} />
-        </Switch>
+
+        <div>
+          <Switch>
+            <Route exact path={`${props.match.path}`} component={Orders} />
+            <Route exact path={`${props.match.path}/orders`} component={Orders} />
+            <Route exact path={`${props.match.path}/car-listing`} render={CarListingPage} />
+          </Switch>
+        </div>
+
       </div>
     )
   }

@@ -1,9 +1,9 @@
 import React from 'react';
 import {
     Row, Col,
-    Form, FormGroup, Label, Input, Button, Table
+    Form, Label, Input, Button, Table
 } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class CarListingAdmin extends React.Component {
     constructor(props) {
@@ -71,16 +71,14 @@ export default class CarListingAdmin extends React.Component {
         return (
             <div className="carListingAdmin">
                 <Row className="mt-4">
-                    <Col xs="6" md="8">
-                        <Button color="secondary"><FontAwesomeIcon className="mr-2" icon="plus-circle" />Add new car to database</Button>
+                    <Col xs="12" sm="4" md="5" xl="7">
+                        <Button className="add-new-car-button" color="secondary"><FontAwesomeIcon className="mr-2" icon="plus-circle" />Add new car to database</Button>
                     </Col>
-                    <Col xs="6" md="4">
-                        <Form inline>
-                            <FormGroup>
-                                <Label for="searchInput">Search:</Label>
-                                <Input className="ml-2" type="text" name="searchText" id="searchInput" placeholder="Type in car name, details..." />
-                            </FormGroup>
-                            <Button className="ml-1" color="success">Search!</Button>
+                    <Col xs="12" sm="8" md="7" xl="5">
+                        <Form inline className="searchForm float-sm-right">
+                            <span className="search-input-label"><Label for="searchInput">Search:</Label></span>
+                            <Input className="search-input-field ml-0 ml-sm-2 mt-3 mt-sm-0" type="text" name="searchText" id="searchInput" placeholder="Type in car name, details..." />
+                            <Button className="search-form-submit ml-0 ml-sm-1 mt-1 mt-sm-0" color="success">Search!</Button>
                         </Form>
                     </Col>
                 </Row>
