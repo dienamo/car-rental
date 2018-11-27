@@ -12,6 +12,11 @@ import {
 } from 'reactstrap';
 import firebase from 'firebase';
 
+import { library as faLibrary } from '@fortawesome/fontawesome-svg-core';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+
+import { attachFirebaseToComponent } from '../helpers/helperFunctions.js';
+
 import Administration from './Administration';
 import Homepage from './Homepage';
 import About from './About';
@@ -26,6 +31,8 @@ class App extends React.Component {
     // Initialize Firebase
     const firebase_config = require('../firebase_config');
     firebase.initializeApp(firebase_config);
+
+    faLibrary.add(faPlusCircle);
   }
 
   toggleNav() {
@@ -33,6 +40,17 @@ class App extends React.Component {
   }
 
   render() {
+
+    /*const AdministrationPage = props => {
+      return (
+        <Administration 
+          firebase={firebase}
+          {...props}
+        />
+      )
+    }*/
+    const AdministrationPage = attachFirebaseToComponent(Administration, firebase);
+
     return (
       <Router>
         <div>
@@ -50,12 +68,13 @@ class App extends React.Component {
               </Nav>
             </Collapse>
           </Navbar>
+          
           <Container>
             <Switch>
               <Route exact path='/' component={Homepage} />
               <Route exact path="/about" component={About} />
               <Route exact path="/contact" component={Contact} />
-              <Route exact path='/administration' render={() => <Administration firebase={firebase} />} />
+              <Route path='/administration' render={AdministrationPage} />
               <Route exact path="/results" component={Results} />
             </Switch>
           </Container>

@@ -1,25 +1,44 @@
 import React from 'react';
+import {
+  Row, Col,
+  Nav, NavItem, NavLink,
+} from 'reactstrap';
+import { Switch, Route } from 'react-router-dom';
+
+import { attachFirebaseToComponent } from '../helpers/helperFunctions.js';
+
+import CarListing from './CarListingAdmin';
 
 class Administration extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    //this.db = this.props.firebase.firestore();
-    this.getAllCars();
   }
-  getAllCars() {
-    const db = this.props.firebase.firestore();
-    db.collection('cars').get().then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-      });
-    })
-  }
+
   render() {
+
+    const props = this.props;
+    const CarListingPage = attachFirebaseToComponent(CarListing, this.props.firebase);
+
     return (
       <div className="administration">
-        <h2>Administration</h2>
+        <Row className="mt-4">
+          <Col xs="12">
+            <h2>Administration</h2>
+            <Nav tabs className="mt-4">
+              <NavItem>
+                <NavLink href={props.match.path + "/car-listing"} active={props.location.pathname === "/administration/car-listing"}>Car Listing</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href={props.match.path + "/orders"} active={props.location.pathname === "/administration/orders"}>Orders</NavLink>
+              </NavItem>
+            </Nav>
+          </Col>
+        </Row>
+        <Switch>
+          <Route exact path={props.match.path} render={CarListingPage} />
+          <Route exact path={`${props.match.path}/car-listing`} render={CarListingPage} />
+        </Switch>
       </div>
     )
   }

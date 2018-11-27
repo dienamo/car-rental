@@ -1,3 +1,5 @@
+.administration .nav-tabs .nav-link.active,.administration .nav-tabs .nav-item.show .nav-link{border-color:#637383 #dee2e6 #fff;border-top-width:2px}
+
 html{height:100%;box-sizing:border-box}body{margin:0;padding:0;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;position:relative;padding-bottom:6rem;min-height:100%}footer{position:absolute;right:0;bottom:0;left:0;padding:1rem;background-color:#efefef;text-align:center}code{font-family:source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace}.page-heading{margin:1rem 0;font-size:2.25rem}.navbar{background:#305694}.navbar a{color:white}.navbar a:hover{color:#efefef}
 
 .car-thumb{margin-bottom:1rem;border:1px solid #dedede;border-radius:2px;background:#f9f9f9;padding:.5rem}.car-thumb img{width:100%}.car-thumb .text{padding-top:.5rem;text-align:center}.car-thumb .text .price{color:red;font-size:1.1rem}
