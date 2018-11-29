@@ -1,14 +1,15 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import * as db from '../database/functions';
 
 export default class SearchForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       redirect: false,
-      carClasses: { economic: true, middle: true, luxury: false, suv: false },
-      car_brand: "all",
-      car_model: "all"
+      carClasses: {},
+      brands: { selected: "all", list: [] },
+      models: { selected: "all", list: [] }
     };
     this.submitForm = this.submitForm.bind(this);
     this.handleClassChange = this.handleClassChange.bind(this);
@@ -26,14 +27,24 @@ export default class SearchForm extends React.Component {
     prev[target.name] = checked;
     this.setState({ carClasses: prev });
   }
+
   handleBrandChange(e) {
-    console.log(e.target.value);
-    this.setState({ car_brand: e.target.value, car_model: "all" });
+    let brand_id = e.target.value;
+    (async () => {
+      this.setState({
+        brands: { ...this.state.brands, selected: brand_id },
+        models: { selected: "all", list: await db.fetch_brand_models(brand_id) }
+      })
+    })();
   }
+
   handleModelChange(e) {
-    console.log(e.target.value);
-    this.setState({ car_model: e.target.value });
+    let model_id = e.target.value;
+    this.setState({
+      models: { ...this.state.models, selected: model_id }
+    });
   }
+
   render() {
     return (
       <React.Fragment>
@@ -96,14 +107,13 @@ export default class SearchForm extends React.Component {
                 </div>
                 <div className="col-md-8">
                   <select onChange={this.handleBrandChange}
-                    defaultValue={this.state.car_brand}
-                    value={this.state.car_brand}
+                    value={this.state.brands.selected}
                     className="form-control"
                     name="car-brand"
                     id="car-brand">
                     <option value="all">All brands</option>
                     <option value="skoda">Skoda</option>
-                    <option value="tesla">Tesla</option>
+                    <option value="bmw">BMW</option>
                   </select>
                 </div>
               </div>
@@ -113,14 +123,15 @@ export default class SearchForm extends React.Component {
                 </div>
                 <div className="col-md-8">
                   <select onChange={this.handleModelChange}
-                    defaultValue={this.state.car_model}
-                    value={this.state.car_brand === "all" ? "all" : this.state.car_model}
+                    value={this.state.brands.selected === "all" ? "all" : this.state.models.selected}
                     className="form-control"
                     name="car-model"
-                    id="car-model" disabled={this.state.car_brand === "all" ? true : false}>
+                    id="car-model"
+                    disabled={this.state.brands.selected === "all" ? true : false}>
                     <option value="all">All from selected brand</option>
-                    <option value="fabia">Fabia</option>
-                    <option value="octavia">Octavia</option>
+                    {this.state.models.list.map(model =>
+                      <option key={model.id} value={model.id}>{model.name}</option>
+                    )}
                   </select>
                 </div>
               </div>

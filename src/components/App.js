@@ -23,9 +23,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { openNav: false };
-    // Initialize Firebase
-    const firebase_config = require('../firebase_config');
-    firebase.initializeApp(firebase_config);
   }
 
   toggleNav() {
