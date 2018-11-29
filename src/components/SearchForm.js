@@ -6,11 +6,12 @@ export default class SearchForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      render: false,
       redirect: false,
-      carClasses: {},
-      brands: { selected: "all", list: [] },
+      classes: [],
+      brands: {},
       models: { selected: "all", list: [] },
-      places: { pick_up: "", drop_off: "", list: [] }
+      places: {}
     };
 
     this.submitForm = this.submitForm.bind(this);
@@ -23,12 +24,20 @@ export default class SearchForm extends React.Component {
 
   async componentDidMount() {
     const places = await db.fetch_places();
+    const classes = await db.fetch_classes();
+    const brands = await db.fetch_class_brands(["middle"]);
     this.setState({
+      classes: [...classes],
       places: {
         pick_up: places[0].id,
         drop_off: places[0].id,
         list: places
-      }
+      },
+      brands: {
+        selected: "all",
+        list: brands
+      },
+      render: true
     });
   }
 
@@ -85,6 +94,8 @@ export default class SearchForm extends React.Component {
           }} />
         )}
         <div className="search-form">
+          {this.state.render ? (
+            <React.Fragment>
           <h3>{this.props.title}</h3>
           <form onSubmit={this.submitForm}>
             <fieldset className="car-classes">
@@ -212,6 +223,10 @@ export default class SearchForm extends React.Component {
             </fieldset>
             <button className="btn btn-primary">Search</button>
           </form>
+            </React.Fragment>
+          ) : (
+              <p>Wait for it ...</p>
+            )}
         </div>
       </React.Fragment>
     )
