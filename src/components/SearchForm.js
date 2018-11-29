@@ -9,13 +9,29 @@ export default class SearchForm extends React.Component {
       redirect: false,
       carClasses: {},
       brands: { selected: "all", list: [] },
-      models: { selected: "all", list: [] }
+      models: { selected: "all", list: [] },
+      places: { pick_up: "", drop_off: "", list: [] }
     };
+
     this.submitForm = this.submitForm.bind(this);
     this.handleClassChange = this.handleClassChange.bind(this);
     this.handleBrandChange = this.handleBrandChange.bind(this);
     this.handleModelChange = this.handleModelChange.bind(this);
+    this.handlePickUpPlace = this.handlePickUpPlace.bind(this);
+    this.handleDropOffPlace = this.handleDropOffPlace.bind(this);
   }
+
+  async componentDidMount() {
+    const places = await db.fetch_places();
+    this.setState({
+      places: {
+        pick_up: places[0].id,
+        drop_off: places[0].id,
+        list: places
+      }
+    });
+  }
+
   submitForm(e) {
     e.preventDefault();
     this.setState({ redirect: true });
@@ -42,6 +58,20 @@ export default class SearchForm extends React.Component {
     let model_id = e.target.value;
     this.setState({
       models: { ...this.state.models, selected: model_id }
+    });
+  }
+
+  handlePickUpPlace(e) {
+    let place_id = e.target.value;
+    this.setState({
+      places: { ...this.state.places, pick_up: place_id }
+    });
+  }
+
+  handleDropOffPlace(e) {
+    let place_id = e.target.value;
+    this.setState({
+      places: { ...this.state.places, drop_off: place_id }
     });
   }
 
@@ -149,8 +179,13 @@ export default class SearchForm extends React.Component {
                 </div>
               </div>
               <label htmlFor="pick-up-location">Pick-up location</label>
-              <select className="form-control" id="pick-up-location">
-                <option>Bratislava Airport</option>
+              <select className="form-control"
+                id="pick-up-location"
+                onChange={this.handlePickUpPlace}
+                value={this.state.places.pick_up}>
+                {this.state.places.list.map(place =>
+                  <option value={place.id} key={place.id}>{place.name}</option>
+                )}
               </select>
             </fieldset>
             <fieldset className="drop-off">
@@ -166,8 +201,13 @@ export default class SearchForm extends React.Component {
                 </div>
               </div>
               <label htmlFor="drop-off-location">Drop-off location</label>
-              <select className="form-control" id="drop-off-location">
-                <option>Bratislava Airport</option>
+              <select className="form-control"
+                id="drop-off-location"
+                onChange={this.handleDropOffPlace}
+                value={this.state.places.drop_off}>
+                {this.state.places.list.map(place =>
+                  <option value={place.id} key={place.id}>{place.name}</option>
+                )}
               </select>
             </fieldset>
             <button className="btn btn-primary">Search</button>

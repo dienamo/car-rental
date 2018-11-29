@@ -15,3 +15,17 @@ export async function fetch_brand_models(brand_id) {
   });
   return models;
 }
+
+export async function fetch_places() {
+  let places = [];
+  const querySnapshot = await db.collection('places').get();
+  querySnapshot.forEach(doc => {
+    places.push({
+      id: doc.id,
+      name: doc.get('name'),
+      address: doc.get('address'),
+      gps: doc.get('gps').toString()
+    });
+  });
+  return places;
+}
