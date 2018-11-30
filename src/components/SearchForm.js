@@ -43,7 +43,11 @@ export default class SearchForm extends React.Component {
 
   submitForm(e) {
     e.preventDefault();
+    if (this.props.onFormSubmit) {
+      this.props.onFormSubmit(this.process_search_data());
+    } else {
     this.setState({ redirect: true });
+  }
   }
 
   handleClassChange(e) {
@@ -90,6 +94,14 @@ export default class SearchForm extends React.Component {
     });
   }
 
+  process_search_data() {
+    let res={};
+    res.classes = ['economic', 'middle'];
+    res.brand = this.state.brands.selected;
+    res.model = this.state.models.selected;
+    return res;
+  }
+
   render() {
     console.log(this.state);
     return (
@@ -97,7 +109,7 @@ export default class SearchForm extends React.Component {
         {this.state.redirect && (
           <Redirect push to={{
             pathname: '/results',
-            state: { referrer: 'homepage' }
+            state: { referrer: 'homepage', data: this.process_search_data() }
           }} />
         )}
         <div className="search-form">

@@ -49,3 +49,33 @@ export async function fetch_places() {
   });
   return places;
 }
+
+export async function search(data) {
+  let res = [];
+  const carsRef = db.collection('cars');
+  for (const class_id of data.classes) {
+    const classRef = db.collection('car-classes').doc(class_id);
+    let query = carsRef.where('class', '==', classRef);
+    if (data.brand !== 'all') {
+      const brandRef = db.collection('car-brands').doc(data.brand);
+      query = query.where('brand', '==', brandRef);
+    }
+    if (data.model !== 'all') {
+      const modelRef = db.collection('car-models').doc(data.model);
+      query = query.where('model', '==', modelRef);
+    }
+    const querySnapshot = await query.get();
+    for (const doc of querySnapshot.docs) {
+      const docData = doc.data();
+      const brandRef = await docData.brand.get();
+      const modelRef = await docData.model.get();
+      res.push({
+        ...docData,
+        id: doc.id,
+        brand: brandRef.data(),
+        model: modelRef.data()
+      });
+    }
+  }
+  return res;
+}
