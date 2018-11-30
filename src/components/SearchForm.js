@@ -95,8 +95,13 @@ export default class SearchForm extends React.Component {
   }
 
   process_search_data() {
-    let res={};
-    res.classes = ['economic', 'middle'];
+    let res = {};
+    res.classes = [];
+    this.state.classes.forEach(c => {
+      if (c.selected) {
+        res.classes.push(c.id);
+      }
+    })
     res.brand = this.state.brands.selected;
     res.model = this.state.models.selected;
     return res;
@@ -131,7 +136,7 @@ export default class SearchForm extends React.Component {
                         type="checkbox" id={"class-" + carClass.id}
                         name={carClass.id}
                         onChange={this.handleClassChange}
-                        checked={carClass.checked} />
+                        checked={carClass.selected} />
                       {carClass.name}
                     </label>
                   )}

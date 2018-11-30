@@ -9,9 +9,9 @@ db.settings({ timestampsInSnapshots: true });
 export async function fetch_classes() {
   let classes = [];
   const querySnapshot = await db.collection('car-classes').get();
-  querySnapshot.forEach(doc => {
+  for (const doc of querySnapshot.docs) {
     classes.push({ ...doc.data(), id: doc.id });
-  });
+  }
   return classes;
 }
 
