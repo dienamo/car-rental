@@ -121,7 +121,8 @@ export default class SearchForm extends React.Component {
                   <legend>Car classes</legend>
                   {this.state.classes.map(carClass =>
                     <label className={carClass.selected ? 'class-check class-checked' : 'class-check'}
-                      htmlFor={"class-" + carClass.id}>
+                      htmlFor={"class-" + carClass.id}
+                      key={carClass.id}>
                       <img
                         className={carClass.selected ? 'check-icon check-icon-checked' : 'check-icon'}
                         alt="checked"
