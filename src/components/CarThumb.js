@@ -8,8 +8,8 @@ export default class CarThumb extends React.Component {
           <img src="./img/dummy.jpg" alt="car" />
         </figure>
         <div className="text">
-          <header>Car name</header>
-          <span className="price">10€</span>
+          <header>{this.props.name}</header>
+          <span className="price">{this.props.price}</span>
         </div>
       </article>
     )
