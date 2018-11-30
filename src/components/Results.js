@@ -33,7 +33,7 @@ export default class Results extends React.Component {
   }
 
   async search(data) {
-    this.setState({renderList: false});
+    this.setState({ renderList: false });
     const cars = await db.search(data);
     this.setState({
       renderList: true,
@@ -54,6 +54,26 @@ export default class Results extends React.Component {
     return null;
   }
 
+  results() {
+    if (this.state.cars.length > 0) {
+      return (
+        <div className="row">
+          {this.state.cars.map(car =>
+            <div className="col-sm-6 col-lg-4 px-2 grid-item" key={car.id}>
+              <CarThumb name={car.brand.name + ' ' + car.model.name} price={car.price} />
+            </div>
+          )}
+        </div>
+      )
+    } else {
+      return (
+        <div class="alert alert-danger" role="alert">
+          No results!
+        </div>
+      )
+    }
+  }
+
   render() {
     return (
       <div className="results">
@@ -68,17 +88,7 @@ export default class Results extends React.Component {
           {this.filter()}
           <div className="col-xs-12 col-md-8">
             <main>
-              {this.state.renderList ? (
-                <div className="row">
-                  {this.state.cars.map(car =>
-                    <div className="col-sm-6 col-lg-4 px-2 grid-item" key={car.id}>
-                      <CarThumb name={car.brand.name + ' ' + car.model.name} price={car.price} />
-                    </div>
-                  )}
-                </div>
-              ) : (
-                  <p>Loading ...</p>
-                )}
+              {this.state.renderList ? this.results() : <p>Loading ...</p>}
             </main>
           </div>
         </div>
