@@ -5,12 +5,12 @@ import {
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import * as db from '../database/functions';
+
 export default class CarListingAdmin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {listingData: null};
-        //this.db = this.props.firebase.firestore();
-        //this.getAllCars();
     }
 
     componentDidMount() {
@@ -18,39 +18,13 @@ export default class CarListingAdmin extends React.Component {
             (async () => {
 
                 this.setState({
-                    listingData: await this.getAllCars()
+                    listingData: await db.get_all_cars_admin()
                 });
 
             })().catch(err => {
                 console.log(err);
             })
         }
-    }
-
-    async getAllCars() {
-        const db = this.props.firebase.firestore();
-
-        const querySnapshot = await db.collection('cars').get();
-
-        let listingData = [];
-
-        querySnapshot.forEach(doc => {
-            // doc.data() is never undefined for query doc snapshots
-            //console.log(doc.id, " => ", doc.data().brand);
-            const data = doc.data();
-            listingData.push([doc.id, data.brand.id, data.price]);
-        });
-
-        return listingData;
-
-        /*db.collection('cars').get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-                // doc.data() is never undefined for query doc snapshots
-                //console.log(doc.id, " => ", doc.data().brand);
-                const data = doc.data();
-                this.listingData.push([data.brand.id, data.price]);
-            });
-        });*/
     }
 
     render() {

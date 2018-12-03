@@ -79,3 +79,18 @@ export async function search(data) {
   }
   return res;
 }
+
+export async function get_all_cars_admin() {
+
+  const allCars = await db.collection('cars').get();
+
+  let listingData = [];
+
+  allCars.forEach(doc => {
+    const data = doc.data();
+    listingData.push([doc.id, data.brand.id, data.price]);
+  });
+
+  return listingData;
+
+}

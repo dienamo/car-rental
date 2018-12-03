@@ -28,8 +28,8 @@ class App extends React.Component {
     super(props);
     this.state = { openNav: false };
     // Initialize Firebase
-    const firebase_config = require('../firebase_config');
-    firebase.initializeApp(firebase_config);
+    /*const firebase_config = require('../firebase_config');
+    firebase.initializeApp(firebase_config);*/
 
     faLibrary.add(faPlusCircle);
   }

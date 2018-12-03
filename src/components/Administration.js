@@ -5,7 +5,7 @@ import {
 } from 'reactstrap';
 import { Switch, Route, NavLink as RouterNavlink } from 'react-router-dom';
 
-import { attachFirebaseToComponent } from '../helpers/helperFunctions.js';
+//import { attachFirebaseToComponent } from '../helpers/helperFunctions.js';
 
 import CarListing from './CarListingAdmin';
 import Orders from './OrdersAdmin';
@@ -19,7 +19,7 @@ class Administration extends React.Component {
   render() {
 
     const props = this.props;
-    const CarListingPage = attachFirebaseToComponent(CarListing, this.props.firebase);
+    //const CarListingPage = attachFirebaseToComponent(CarListing, this.props.firebase);
 
     return (
       <div className="administration">
@@ -41,7 +41,7 @@ class Administration extends React.Component {
           <Switch>
             <Route exact path={`${props.match.path}`} component={Orders} />
             <Route exact path={`${props.match.path}/orders`} component={Orders} />
-            <Route exact path={`${props.match.path}/car-listing`} render={CarListingPage} />
+            <Route exact path={`${props.match.path}/car-listing`} component={CarListing} />
           </Switch>
         </div>
 
