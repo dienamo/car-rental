@@ -1,7 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter, Switch, Route, Link, NavLink as RouterNavlink } from 'react-router-dom';
 import {
-  Container,
   Navbar,
   NavbarBrand,
   NavbarToggler,
@@ -11,6 +10,11 @@ import {
   NavLink
 } from 'reactstrap';
 import firebase from 'firebase';
+
+import { library as faLibrary } from '@fortawesome/fontawesome-svg-core';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+
+import { attachFirebaseToComponent } from '../helpers/helperFunctions.js';
 
 import Administration from './Administration';
 import Homepage from './Homepage';
@@ -23,6 +27,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { openNav: false };
+    // Initialize Firebase
+    const firebase_config = require('../firebase_config');
+    firebase.initializeApp(firebase_config);
+
+    faLibrary.add(faPlusCircle);
   }
 
   toggleNav() {
@@ -30,39 +39,43 @@ class App extends React.Component {
   }
 
   render() {
+
+    const AdministrationPage = attachFirebaseToComponent(Administration, firebase);
+
     return (
-      <Router>
+      <HashRouter>
         <div>
           <Navbar expand="xs">
-            <NavbarBrand href="/">Car Rental</NavbarBrand>
+            <NavbarBrand tag={RouterNavlink} to="/">Car Rental</NavbarBrand>
             <NavbarToggler onClick={() => this.toggleNav()} />
             <Collapse isOpen={this.state.openNav} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink href="/about">About us</NavLink>
+                  <NavLink tag={RouterNavlink} to="/about">About us</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="/contact">Contact</NavLink>
+                  <NavLink tag={RouterNavlink} to="/contact">Contact</NavLink>
                 </NavItem>
               </Nav>
             </Collapse>
           </Navbar>
-          <Container>
+          
+          <div className="custom-container">
             <Switch>
               <Route exact path='/' component={Homepage} />
               <Route exact path="/about" component={About} />
               <Route exact path="/contact" component={Contact} />
-              <Route exact path='/administration' render={() => <Administration firebase={firebase} />} />
+              <Route path='/administration' render={AdministrationPage} />
               <Route exact path="/results" component={Results} />
             </Switch>
-          </Container>
+          </div>
 
           <footer>
-            © 2018 Copyright: Car Rental Group
+            © 2018 Copyright: Car Rental Group &bull; <Link to="/administration">Admin panel</Link>
           </footer>
 
         </div>
-      </Router>
+      </HashRouter>
     );
   }
 }
