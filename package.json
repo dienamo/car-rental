@@ -30,7 +30,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "gulp": "^4.0.0",
+    "gulp": "3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-sass": "^4.0.2"
   }
