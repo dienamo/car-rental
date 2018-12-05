@@ -32,7 +32,7 @@ export default class CarListingAdmin extends React.Component {
 
         let inputValue = e.target.value;
 
-        if (e.target.value !== "") {
+        if (inputValue !== "") {
             (async () => {
 
                 this.setState({
