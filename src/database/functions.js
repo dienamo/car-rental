@@ -86,11 +86,69 @@ export async function get_all_cars_admin() {
 
   let listingData = [];
 
-  allCars.forEach(doc => {
-    const data = doc.data();
-    listingData.push([doc.id, data.brand.id, data.price]);
-  });
+  for (const carDoc of allCars.docs) {
+    const carData = carDoc.data();
+
+    const carBrand = await carData.brand.get();
+    const carModel = await carData.model.get();
+    
+    listingData.push([carDoc.id, `${carBrand.data().name} ${carModel.data().name}`, carData.license_plate, (carData.availability === true ? 'Available' : 'Not available'), carData.engine, carData.price]);
+  }
 
   return listingData;
 
+}
+
+export async function quick_search_cars_admin(expression) {
+
+  let listingData = [];
+
+  // Find cars by brand names
+  const brandNames = await db.collection('car-brands').where('name', '==', expression).get();
+  
+  for (const brandNameDoc of brandNames.docs) {
+
+    const cars = await db.collection('cars').where('brand', '==', brandNameDoc.ref).get();
+
+    for (const carDoc of cars.docs) {
+      const carData = carDoc.data();
+
+      const carModel = await carData.model.get();
+
+      listingData.push([carDoc.id, `${brandNameDoc.data().name} ${carModel.data().name}`, carData.license_plate, (carData.availability === true ? 'Available' : 'Not available'), carData.engine, carData.price]);
+    }
+  }
+
+  // Find cars by model names
+  const modelNames = await db.collection('car-models').where('name', '==', expression).get();
+
+  for (const modelNameDoc of modelNames.docs) {
+
+    const cars = await db.collection('cars').where('model', '==', modelNameDoc.ref).get();
+
+    for (const carDoc of cars.docs) {
+      const carData = carDoc.data();
+
+      const carBrand = await carData.brand.get();
+
+      listingData.push([carDoc.id, `${carBrand.data().name} ${modelNameDoc.data().name}`, carData.license_plate, (carData.availability === true ? 'Available' : 'Not available'), carData.engine, carData.price]);
+    }
+  }
+
+  // Find cars by license plate
+  const carsByLicensePlate = await db.collection('cars').where('license_plate', '==', expression).get();
+
+  for (const carDoc of carsByLicensePlate.docs) {
+    const carData = carDoc.data();
+
+    const carBrand = await carData.brand.get();
+    const carModel = await carData.model.get();
+
+    listingData.push([carDoc.id, `${carBrand.data().name} ${carModel.data().name}`, carData.license_plate, (carData.availability === true ? 'Available' : 'Not available'), carData.engine, carData.price]);
+  }
+
+  // Find cars by engine
+  /*const carsByEngine = await db.collection('cars').where('engine', '==', expression).get();*/
+  //console.log(listingData);
+  return listingData;
 }
