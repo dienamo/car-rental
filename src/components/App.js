@@ -44,12 +44,15 @@ class App extends React.Component {
 
     return (
       <HashRouter>
-        <div>
-          <Navbar expand="xs">
+        <React.Fragment>
+          <Navbar expand="sm" tag="header">
             <NavbarBrand tag={RouterNavlink} to="/">Car Rental</NavbarBrand>
             <NavbarToggler onClick={() => this.toggleNav()} />
-            <Collapse isOpen={this.state.openNav} navbar>
+            <Collapse isOpen={this.state.openNav} navbar tag="nav">
               <Nav className="ml-auto" navbar>
+                <NavItem>
+                  <NavLink tag={RouterNavlink} to="/">Home</NavLink>
+                </NavItem>
                 <NavItem>
                   <NavLink tag={RouterNavlink} to="/about">About us</NavLink>
                 </NavItem>
@@ -59,7 +62,6 @@ class App extends React.Component {
               </Nav>
             </Collapse>
           </Navbar>
-          
           <div className="custom-container">
             <Switch>
               <Route exact path='/' component={Homepage} />
@@ -69,12 +71,19 @@ class App extends React.Component {
               <Route exact path="/results" component={Results} />
             </Switch>
           </div>
-
           <footer>
-            © 2018 Copyright: Car Rental Group &bull; <Link to="/administration">Admin panel</Link>
+            <div>© 2018 Copyright: Car Rental Group</div>
+            <nav>
+              <Link to="/">Home</Link>
+              <span> | </span>
+              <Link to="/about">About us</Link>
+              <span> | </span>
+              <Link to="/contact">Contact</Link>
+              <span> | </span>
+              <Link to="/administration">Administration</Link>
+            </nav>
           </footer>
-
-        </div>
+        </React.Fragment>
       </HashRouter>
     );
   }
