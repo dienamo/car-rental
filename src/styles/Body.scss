@@ -66,6 +66,12 @@ code {
 
   a {
     color: white;
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-right: .5rem;
+    }
 
     &:hover {
       color: #efefef;
