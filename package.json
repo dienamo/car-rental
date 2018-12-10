@@ -1,7 +1,8 @@
 {
-  "name": "firebase-test",
+  "name": "car-rental",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://st.fmph.uniba.sk/~cifra9/CR",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
