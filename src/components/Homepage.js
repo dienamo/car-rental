@@ -23,7 +23,7 @@ export default class Homepage extends React.Component {
             <div className="right">
               <h1 className="page-heading">Welcome!</h1>
               <h2>Here you can search and rent car of your dreams!</h2>
-              <img src="./img/stock.jpg" alt="stock" />
+              <img src="./img/stock.jpg" alt="stock" className="d-none d-md-block" />
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lobortis varius nisi nec sagittis. Integer rhoncus arcu ante, vel scelerisque augue dapibus eu. Praesent sed sapien id erat porttitor gravida non sit amet augue. Curabitur luctus porttitor ante, vel aliquet dolor commodo nec. Praesent at enim eu quam consequat aliquam.</p>
             </div>
           </Col>
