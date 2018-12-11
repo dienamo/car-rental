@@ -6,11 +6,12 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import * as db from '../database/functions';
+import AddNewCarAdmin from './AddNewCarAdmin';
 
 export default class CarListingAdmin extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {listingData: null};
+        this.state = {listingData: null, showAddNewCarForm: false};
         this.throttleInputTimeout = null;
     }
 
@@ -73,6 +74,14 @@ export default class CarListingAdmin extends React.Component {
         }
     }
 
+    handleNewCarButtonClick(e) {
+        this.setState({ showAddNewCarForm: true });
+    }
+
+    handleCloseAddNewCarForm(e) {
+        this.setState({ showAddNewCarForm: false });
+    }
+
     render() {
         let listingTableRows = null;
 
@@ -94,7 +103,7 @@ export default class CarListingAdmin extends React.Component {
             <div className="carListingAdmin">
                 <Row className="mt-4">
                     <Col xs="12" sm="4" md="5" xl="7">
-                        <Button className="add-new-car-button" color="secondary"><FontAwesomeIcon className="mr-2" icon="plus-circle" />Add new car to database</Button>
+                        <Button className="add-new-car-button" onClick={(e) => this.handleNewCarButtonClick(e)} color="secondary"><FontAwesomeIcon className="mr-2" icon="plus-circle" />Add new car to database</Button>
                     </Col>
                     <Col xs="12" sm="8" md="7" xl="5">
                         <Form inline className="searchForm float-sm-right">
@@ -133,6 +142,7 @@ export default class CarListingAdmin extends React.Component {
                         )}
                     </Col>
                 </Row>
+                <AddNewCarAdmin isShowed={this.state.showAddNewCarForm} closeHandler={this.handleCloseAddNewCarForm.bind(this)} />
             </div>
         )
     }
