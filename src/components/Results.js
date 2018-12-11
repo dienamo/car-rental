@@ -45,9 +45,7 @@ export default class Results extends React.Component {
     if (this.state.showFilter || this.state.width > 767) {
       return (
         <div className="col-xs-12 col-md-4">
-          <aside>
-            <SearchForm title="Edit Search" onFormSubmit={this.search} />
-          </aside>
+          <SearchForm title="Edit Search" onFormSubmit={this.search} />
         </div>
       )
     }
@@ -84,14 +82,14 @@ export default class Results extends React.Component {
             Edit Search
           </button>
         </div>
-        <div className="row">
-          {this.filter()}
-          <div className="col-xs-12 col-md-8">
-            <main>
+        <main>
+          <div className="row">
+            {this.filter()}
+            <div className="col-xs-12 col-md-8">
               {this.state.renderList ? this.results() : <p>Loading ...</p>}
-            </main>
+            </div>
           </div>
-        </div>
+        </main>
       </div>
     )
   }
