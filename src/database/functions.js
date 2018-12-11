@@ -41,6 +41,21 @@ export async function fetch_brand_models(brand_id) {
   return models;
 }
 
+export async function fetch_car(car_id) {
+  const carSnapshot = await db.collection('cars').doc(car_id).get();
+  if (carSnapshot.exists) {
+    let data = carSnapshot.data();
+    const brandSnapshot = await data.brand.get();
+    data.brand = brandSnapshot.data();
+    const modelSnapshot = await data.model.get();
+    data.model = modelSnapshot.data();
+    const classSnapshot = await data.class.get();
+    data.class = classSnapshot.data();
+    return data;
+  }
+  return null;
+}
+
 export async function fetch_places() {
   let places = [];
   const querySnapshot = await db.collection('places').get();
