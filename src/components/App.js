@@ -12,7 +12,7 @@ import {
 import firebase from 'firebase';
 
 import { library as faLibrary } from '@fortawesome/fontawesome-svg-core';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faCarSide } from '@fortawesome/free-solid-svg-icons';
 
 import { attachFirebaseToComponent } from '../helpers/helperFunctions.js';
 
@@ -21,6 +21,9 @@ import Homepage from './Homepage';
 import About from './About';
 import Contact from './Contact';
 import Results from './Results';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 class App extends React.Component {
 
@@ -32,6 +35,7 @@ class App extends React.Component {
     firebase.initializeApp(firebase_config);*/
 
     faLibrary.add(faPlusCircle);
+    faLibrary.add(faCarSide);
   }
 
   toggleNav() {
@@ -44,12 +48,18 @@ class App extends React.Component {
 
     return (
       <HashRouter>
-        <div>
-          <Navbar expand="xs">
-            <NavbarBrand tag={RouterNavlink} to="/">Car Rental</NavbarBrand>
+        <React.Fragment>
+          <Navbar expand="sm" tag="header">
+            <NavbarBrand tag={RouterNavlink} to="/">
+              <FontAwesomeIcon icon="car-side" size="2x" />
+              Car Rental
+            </NavbarBrand>
             <NavbarToggler onClick={() => this.toggleNav()} />
-            <Collapse isOpen={this.state.openNav} navbar>
+            <Collapse isOpen={this.state.openNav} navbar tag="nav">
               <Nav className="ml-auto" navbar>
+                <NavItem>
+                  <NavLink tag={RouterNavlink} to="/">Home</NavLink>
+                </NavItem>
                 <NavItem>
                   <NavLink tag={RouterNavlink} to="/about">About us</NavLink>
                 </NavItem>
@@ -59,7 +69,6 @@ class App extends React.Component {
               </Nav>
             </Collapse>
           </Navbar>
-          
           <div className="custom-container">
             <Switch>
               <Route exact path='/' component={Homepage} />
@@ -69,12 +78,19 @@ class App extends React.Component {
               <Route exact path="/results" component={Results} />
             </Switch>
           </div>
-
           <footer>
-            © 2018 Copyright: Car Rental Group &bull; <Link to="/administration">Admin panel</Link>
+            <div>© 2018 Copyright: Car Rental Group</div>
+            <nav>
+              <Link to="/">Home</Link>
+              <span> | </span>
+              <Link to="/about">About us</Link>
+              <span> | </span>
+              <Link to="/contact">Contact</Link>
+              <span> | </span>
+              <Link to="/administration">Administration</Link>
+            </nav>
           </footer>
-
-        </div>
+        </React.Fragment>
       </HashRouter>
     );
   }
