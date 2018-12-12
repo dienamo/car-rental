@@ -19,6 +19,7 @@ export default class Results extends React.Component {
     this.search = this.search.bind(this);
   }
   componentDidMount() {
+    document.title = "Search results";
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
     this.search(this.props.location.state.data);
@@ -60,7 +61,7 @@ export default class Results extends React.Component {
           {this.state.cars.map(car =>
             <div className="col-sm-6 col-lg-4 px-2 grid-item" key={car.id}>
               <Link to={`/car/${car.id}`}>
-              <CarThumb name={car.brand.name + ' ' + car.model.name} price={car.price} />
+                <CarThumb name={car.brand.name + ' ' + car.model.name} price={car.price} />
               </Link>
             </div>
           )}
@@ -76,6 +77,7 @@ export default class Results extends React.Component {
   }
 
   render() {
+    console.log('state:', this.state);
     return (
       <div className="results">
         <div className="page-heading-wrap">

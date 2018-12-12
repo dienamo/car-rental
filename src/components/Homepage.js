@@ -10,6 +10,9 @@ export default class Homepage extends React.Component {
     super(props);
     this.state = {};
   }
+  componentDidMount() {
+    document.title = "Car Rental";
+  }
   render() {
     return (
       <div className="homepage">
