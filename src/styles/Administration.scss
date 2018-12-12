@@ -50,6 +50,18 @@
         .small-screen-currency-column {
             display: none;
         }
+
+        .saveform-spinner {
+            animation-duration: 1s
+        }
+
+        .saveform-success {
+            color: rgb(40, 167, 69);
+        }
+
+        .saveform-fail {
+            color :rgb(220, 53, 69);
+        }
     }
 
     /* Main administration panel - responsive */

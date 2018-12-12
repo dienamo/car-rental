@@ -1,6 +1,5 @@
 import firebase from 'firebase';
 
-
 const firebase_config = require('../firebase_config');
 firebase.initializeApp(firebase_config);
 
@@ -96,6 +95,8 @@ export async function get_all_cars_admin() {
     listingData.push([carDoc.id, `${carBrand.data().name} ${carModel.data().name}`, carData.license_plate, (carData.availability === true ? 'Available' : 'Not available'), carData.engine, carData.price]);
   }
 
+  //console.log(listingData);
+
   return listingData;
 
 }
@@ -164,24 +165,56 @@ export async function save_new_car(formData) {
   if (brandsByName.docs.length > 0) {
     brandRef = brandsByName.docs[0].ref;
   } else {
-    brandRef = await db.collection('car-brands').doc(formData.brand).set({
+    let slugFormBrand = formData.brand.toLowerCase().trim().replace(/ /g, "-");
+
+    brandRef = await db.collection('car-brands').doc(slugFormBrand);
+
+    await brandRef.set({
       name: formData.brand
-    })
+    });
   }
 
   const classesByName = await db.collection('car-classes').where('name', '==', formData.class).get();
   if (classesByName.docs.length > 0) {
     classRef = classesByName.docs[0].ref;
+  } else {
+    let slugFormClass = formData.class.toLowerCase().trim().replace(/ /g, "-");
+
+    classRef = await db.collection('car-classes').doc(slugFormClass);
+
+    await classRef.set({
+      name: formData.class
+    });
   }
 
   const modelsByName = await db.collection('car-models').where('name', '==', formData.model).get();
   if (modelsByName.docs.length > 0) {
     modelRef = modelsByName.docs[0].ref;
+  } else {
+
+    let slugFormModel = formData.model.toLowerCase().trim().replace(/ /g, "-");
+
+    modelRef = await db.collection('car-models').doc(slugFormModel);
+
+    await modelRef.set({
+      brand_id: brandRef,
+      name: formData.model
+    });
   }
   
   let result = await db.collection('cars').add({
     availability: (formData.availability === 'true' ? true : false),
-    brand: brandRef
+    brand: brandRef,
+    class: classRef,
+    engine: formData.engine,
+    fuel: formData.fuel,
+    license_plate: formData.license_plate,
+    model: modelRef,
+    price: Number(formData.price),
+    seats: Number(formData.seats),
+    transmission: formData.transmission
   });
-  console.log(brandsByName.docs);
+
+  return result;
+
 }
