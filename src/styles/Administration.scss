@@ -2,14 +2,10 @@ $newCarFormFooterHeight: 64px;
 
 .administration {
 
-    /* Main administration panel */
+    /* Main administration panel + car listing */
     .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
         border-color: #637383 #dee2e6 #fff;
         border-top-width: 2px;
-    }
-
-    .form-inline .search-input-field {
-        width: 230px;
     }
 
     .dark-div {
@@ -22,120 +18,171 @@ $newCarFormFooterHeight: 64px;
         z-index: 9997;
     }
 
-    /* Add new car panel */
-    .add-new-car-form {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 70%;
-        height: 75%;
-        background-color: #fff;
-        z-index: 9998;
-        position: fixed;
-
-        .list-group {
-            overflow-y: auto;
-            padding-bottom: $newCarFormFooterHeight;
+    .carListingAdmin {
+        .form-inline .search-input-field {
+            width: 230px;
         }
 
-        .list-group > :last-child {
-            border-bottom: 0;
-        }
-
-        h3 {
-            background-color: rgb(247, 247, 247);
-        }
-
-        footer {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background-color: rgb(247, 247, 247);
-            height: $newCarFormFooterHeight;
-            z-index: 9999
-        }
-
-        .small-screen-label {
+        .small-screen-action-buttons, .very-small-screen-action-buttons {
             display: none;
         }
 
-        .small-screen-currency-column {
-            display: none;
+        .listing-action-button-big-screen {
+            min-width: 60px;
+            margin-bottom: 1px;
         }
 
-        .saveform-spinner {
-            animation-duration: 1s
-        }
-
-        .saveform-success {
-            color: rgb(40, 167, 69);
-        }
-
-        .saveform-fail {
-            color :rgb(220, 53, 69);
+        .listing-action-button-big-screen:not(:last-child), .listing-action-button-small-screen:not(:last-child) {
+            margin-right: 1px;
         }
     }
 
-    /* Main administration panel - responsive */
+    /* Add new car panel */
+    .carDetailsFormAdmin {
+        .add-new-car-form {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 75%;
+            background-color: #fff;
+            z-index: 9998;
+            position: fixed;
+
+            .list-group {
+                overflow-y: auto;
+                padding-bottom: $newCarFormFooterHeight;
+            }
+
+            .list-group > :last-child {
+                border-bottom: 0;
+            }
+
+            h3 {
+                background-color: rgb(247, 247, 247);
+            }
+
+            footer {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: rgb(247, 247, 247);
+                height: $newCarFormFooterHeight;
+                z-index: 9999
+            }
+
+            .small-screen-label {
+                display: none;
+            }
+
+            .small-screen-currency-column {
+                display: none;
+            }
+
+            .saveform-spinner {
+                animation-duration: 1s
+            }
+
+            .saveform-spinner-icon {
+                animation-duration: 1s
+            }
+
+            .saveform-success {
+                color: rgb(40, 167, 69);
+            }
+
+            .saveform-fail {
+                color :rgb(220, 53, 69);
+            }
+        }
+    }
+
+    /* Main administration panel + car listing - responsive */
+    @media only screen and (max-width: 767px) {
+        .carListingAdmin {
+            .small-screen-action-buttons {
+                display: inline-block;
+            }
+
+            .very-small-screen-action-buttons, .big-screen-action-buttons {
+                display: none;
+            }
+        }
+    }
+
     @media only screen and (max-width: 770px) {
-        .search-input-label {
-            display: none;
+        .carListingAdmin {
+            .search-input-label {
+                display: none;
+            }
         }
     }
 
     @media only screen and (min-width: 576px) and (max-width: 610px) {
-        .form-inline .search-input-field {
-            width: 190px;
+        .carListingAdmin {
+            .form-inline .search-input-field {
+                width: 190px;
+            }
         }
     }
 
     @media only screen and (max-width: 575px) {
-        .add-new-car-button, .form-inline .search-input-field, .search-form-submit {
-            width: 100%;
-        }
+        .carListingAdmin {
+            .add-new-car-button, .form-inline .search-input-field, .search-form-submit {
+                width: 100%;
+            }
 
-        .engine-data-column {
-            display: none;
+            .hide-listing-column {
+                display: none;
+            }
         }
     }
 
     /* Add new car panel - responsive */
     @media only screen and (max-width: 767px) {
-        .add-new-car-form {
-            .small-screen-label {
-                display: inline-block;
-            }
+        .carDetailsFormAdmin {
+            .add-new-car-form {
+                .small-screen-label {
+                    display: inline-block;
+                }
 
-            .big-screen-label {
-                display: none;
-            }
+                .big-screen-label {
+                    display: none;
+                }
 
-            .small-screen-currency-column {
-                display: block;
-            }
+                .small-screen-currency-column {
+                    display: block;
+                }
 
-            .big-screen-currency-column {
-                display: none;
+                .big-screen-currency-column {
+                    display: none;
+                }
             }
         }
     }
 
     @media only screen and (min-width: 768px) and (max-width: 870px) {
-        .add-new-car-form {
-            font-size: 14px;
+        .carDetailsFormAdmin {
+            .add-new-car-form {
+                font-size: 14px;
+            }
         }
     }
 
     @media only screen and (max-width: 991px) {
-        .add-new-car-form {
-            width: 95%;
+        .carDetailsFormAdmin {
+            .add-new-car-form {
+                width: 95%;
+            }
         }
     }
 
     @media only screen and (min-width: 991px) and (max-width: 1360px) {
-        .add-new-car-form {
-            width: 80%;
+        .carDetailsFormAdmin {
+            .add-new-car-form {
+                width: 80%;
+            }
         }
     }
 }

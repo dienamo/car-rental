@@ -155,7 +155,7 @@ export async function quick_search_cars_admin(expression) {
   return listingData;
 }
 
-export async function save_new_car(formData) {
+export async function save_car_data(formData, carId = null) {
 
   let brandRef = null;
   let classRef = null;
@@ -174,18 +174,7 @@ export async function save_new_car(formData) {
     });
   }
 
-  const classesByName = await db.collection('car-classes').where('name', '==', formData.class).get();
-  if (classesByName.docs.length > 0) {
-    classRef = classesByName.docs[0].ref;
-  } else {
-    let slugFormClass = formData.class.toLowerCase().trim().replace(/ /g, "-");
-
-    classRef = await db.collection('car-classes').doc(slugFormClass);
-
-    await classRef.set({
-      name: formData.class
-    });
-  }
+  classRef = await db.collection('car-classes').doc(formData.class);
 
   const modelsByName = await db.collection('car-models').where('name', '==', formData.model).get();
   if (modelsByName.docs.length > 0) {
@@ -201,20 +190,74 @@ export async function save_new_car(formData) {
       name: formData.model
     });
   }
-  
-  let result = await db.collection('cars').add({
-    availability: (formData.availability === 'true' ? true : false),
-    brand: brandRef,
-    class: classRef,
-    engine: formData.engine,
-    fuel: formData.fuel,
-    license_plate: formData.license_plate,
-    model: modelRef,
-    price: Number(formData.price),
-    seats: Number(formData.seats),
-    transmission: formData.transmission
-  });
+
+  let result = null;
+
+  if (carId !== null) {
+
+    // update
+
+    const carRef = await db.collection('cars').doc(carId);
+
+    result = await carRef.update({
+      availability: (formData.availability === 'true' ? true : false),
+      brand: brandRef,
+      class: classRef,
+      engine: formData.engine,
+      fuel: formData.fuel,
+      license_plate: formData.license_plate,
+      model: modelRef,
+      price: Number(formData.price),
+      seats: Number(formData.seats),
+      transmission: formData.transmission 
+    });
+
+  } else {
+
+    // create
+
+    result = await db.collection('cars').add({
+      availability: (formData.availability === 'true' ? true : false),
+      brand: brandRef,
+      class: classRef,
+      engine: formData.engine,
+      fuel: formData.fuel,
+      license_plate: formData.license_plate,
+      model: modelRef,
+      price: Number(formData.price),
+      seats: Number(formData.seats),
+      transmission: formData.transmission
+    });
+  }
 
   return result;
 
+}
+
+export async function get_car_data(carId) {
+  const carDoc = await db.collection('cars').doc(carId).get();
+  const carDataFetched = carDoc.data();
+
+  const carBrand = await carDataFetched.brand.get();
+  const carBrandName = carBrand.data().name;
+
+  const carModel = await carDataFetched.model.get();
+  const carModelName = carModel.data().name;
+
+  const carClass = await carDataFetched.class.get();
+  
+  const carData = {
+    availability: carDataFetched.availability,
+    brand: carBrandName,
+    class: carClass.id,
+    engine: carDataFetched.engine,
+    fuel: carDataFetched.fuel,
+    license_plate: carDataFetched.license_plate,
+    model: carModelName,
+    price: carDataFetched.price,
+    seats: carDataFetched.seats,
+    transmission: carDataFetched.transmission
+  }
+
+  return carData;
 }

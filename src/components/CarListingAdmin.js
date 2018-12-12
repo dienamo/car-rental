@@ -1,17 +1,22 @@
 import React from 'react';
 import {
     Row, Col,
-    Form, Label, Input, Button, Table
+    Form, Label, Input, Button, Table, ButtonDropdown, DropdownToggle, DropdownItem, DropdownMenu
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import * as db from '../database/functions';
-import AddNewCarAdmin from './AddNewCarAdmin';
+import CarDetailsFormAdmin from './CarDetailsFormAdmin';
 
 export default class CarListingAdmin extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {listingData: null, showAddNewCarForm: false};
+        this.state = {
+            listingData: null, 
+            showAddNewCarForm: false, 
+            showEditCarForm: false,
+            editedCarId: null
+        };
         this.throttleInputTimeout = null;
     }
 
@@ -78,8 +83,12 @@ export default class CarListingAdmin extends React.Component {
         this.setState({ showAddNewCarForm: true });
     }
 
-    handleCloseAddNewCarForm(e) {
-        this.setState({ showAddNewCarForm: false });
+    handleEditCarButtonClick(e, carId) {
+        this.setState({ showEditNewCarForm: true, editedCarId: carId });
+    }
+
+    handleCloseCarForm(e) {
+        this.setState({ showAddNewCarForm: false, showEditNewCarForm: false, editedCarId: null });
     }
 
     render() {
@@ -90,10 +99,20 @@ export default class CarListingAdmin extends React.Component {
                 return (
                     <tr key={carData[0]}>
                         <td>{carData[1]}</td>
-                        <td>{carData[2]}</td>
+                        <td className="hide-listing-column">{carData[2]}</td>
                         <td>{carData[3]}</td>
-                        <td className="engine-data-column">{carData[4]}</td>
+                        <td className="hide-listing-column">{carData[4]}</td>
                         <td>{carData[5]}</td>
+                        <td className="action-buttons-column text-nowrap">
+                            <div className="big-screen-action-buttons">
+                                <Button onClick={(e) => this.handleEditCarButtonClick(e, carData[0])} className="listing-action-button-big-screen" color="info" size="sm">Edit</Button>
+                                <Button className="listing-action-button-big-screen" color="danger" size="sm">Delete</Button>
+                            </div>
+                            <div className="small-screen-action-buttons">
+                                <Button onClick={(e) => this.handleEditCarButtonClick(e, carData[0])} className="listing-action-button-small-screen" color="info" size="sm"><FontAwesomeIcon icon="edit" /></Button>
+                                <Button className="listing-action-button-small-screen" color="danger" size="sm"><FontAwesomeIcon icon="trash-alt" /></Button>
+                            </div>
+                        </td>
                     </tr>
                 );
             });
@@ -123,10 +142,11 @@ export default class CarListingAdmin extends React.Component {
                                     <thead>
                                         <tr>
                                             <th>Car model</th>
-                                            <th>License Plate</th>
+                                            <th className="hide-listing-column">License Plate</th>
                                             <th>Status</th>
-                                            <th className="engine-data-column">Engine</th>
+                                            <th className="hide-listing-column">Engine</th>
                                             <th>Price</th>
+                                            <th className="action-buttons-column">Actions</th>
                                         </tr>
                                     </thead>
                                     {this.state.listingData.length > 0 && 
@@ -143,7 +163,10 @@ export default class CarListingAdmin extends React.Component {
                     </Col>
                 </Row>
                 {this.state.showAddNewCarForm === true &&
-                    <AddNewCarAdmin closeHandler={this.handleCloseAddNewCarForm.bind(this)} />
+                    <CarDetailsFormAdmin formType="create" closeHandler={this.handleCloseCarForm.bind(this)} />
+                }
+                {this.state.showEditNewCarForm === true && 
+                    <CarDetailsFormAdmin formType="edit" carId={this.state.editedCarId} closeHandler={this.handleCloseCarForm.bind(this)} />
                 }
             </div>
         )
