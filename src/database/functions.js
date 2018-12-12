@@ -161,6 +161,10 @@ export async function save_car_data(formData, carId = null) {
   let classRef = null;
   let modelRef = null;
 
+  for (const index in formData) {
+    formData[index] = formData[index].trim();
+  }
+
   const brandsByName = await db.collection('car-brands').where('name', '==', formData.brand).get();
   if (brandsByName.docs.length > 0) {
     brandRef = brandsByName.docs[0].ref;

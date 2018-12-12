@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     Row, Col,
-    Form, Label, Input, Button, Table, ButtonDropdown, DropdownToggle, DropdownItem, DropdownMenu
+    Form, Label, Input, Button, Table
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

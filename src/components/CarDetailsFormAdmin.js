@@ -68,7 +68,7 @@ export default class CarDetailsFormAdmin extends React.Component {
 
         if (this._isMounted) {
             this.setState((currentState, props) => {
-                currentState.formData[eventTarget.name] = eventTarget.value.trim();
+                currentState.formData[eventTarget.name] = eventTarget.value;
                 return currentState;
             });
         }
@@ -118,12 +118,15 @@ export default class CarDetailsFormAdmin extends React.Component {
                 <div onClick={() => this.handleClose()} className="dark-div"></div>
                 <form disabled onSubmit={(e) => this.saveCarData(e)}>
 					<Card className="add-new-car-form rounded">
-                        <CardHeader tag="h3" className="sticky-top">{this.props.formType === "edit" ? ('Edit car') : ('Add new car to database')}</CardHeader>
+                        <CardHeader tag="header" className="sticky-top">
+                            <h3 className="float-left">{this.props.formType === "edit" ? ('Edit car') : ('Add new car to database')}</h3>
+                            <div onClick={() => this.handleClose()} className="float-right close-icon"><FontAwesomeIcon icon="times" /></div>
+                        </CardHeader>
                         <ListGroup className="list-group-flush">             
                             <ListGroupItem>
                                 <fieldset disabled={(this.state.submitState === "submiting" || this.state.formLoading === true) && true}>
                                     <Row>
-                                        <legend className="col-12 pb-3">Descriptive details</legend>
+                                        <legend className="col-12 pb-2 pb-sm-3">Descriptive details</legend>
                                     </Row>
                                     <Row>
                                         <Col xs={{size: 12}} md={{size: 6}}>    
@@ -173,7 +176,7 @@ export default class CarDetailsFormAdmin extends React.Component {
                                                         ) : (
                                                             <React.Fragment>
                                                                 {this.state.carClasses.map(carClass => {
-                                                                    return <option value={carClass.id}>{carClass.name}</option>
+                                                                    return <option key={carClass.id} value={carClass.id}>{carClass.name}</option>
                                                                 })}
                                                             </React.Fragment>
                                                         )}
@@ -204,7 +207,7 @@ export default class CarDetailsFormAdmin extends React.Component {
                             <ListGroupItem>
                                 <fieldset disabled={(this.state.submitState === "submiting" || this.state.formLoading === true) && true}>
                                     <Row>
-                                        <legend className="col-12 pb-2">Administrative details</legend>
+                                        <legend className="col-12 pb-2 pb-sm-3">Administrative details</legend>
                                     </Row>
                                     <Row>
                                         <Col xs={{size: 12}} md={{size: 6}}>
@@ -233,7 +236,7 @@ export default class CarDetailsFormAdmin extends React.Component {
                             <ListGroupItem>
                                 <fieldset disabled={(this.state.submitState === "submiting" || this.state.formLoading === true) && true}>
                                     <Row>
-                                        <legend className="col-12 pb-2">Stock informations</legend>
+                                        <legend className="col-12 pb-2 pb-sm-3">Stock informations</legend>
                                     </Row>
                                     <Row>
                                         <Col xs={{size: 12}} md={{size: 6}}>
