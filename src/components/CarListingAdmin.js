@@ -135,7 +135,9 @@ export default class CarListingAdmin extends React.Component {
                 <Row className="mt-4">
                     <Col xs="12">
                         {this.state.listingData === null ? (
-                            <div>Loading data...</div>
+                            <div className="mt-2 mr-3">
+                                <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="spinner-icon mr-2" icon="spinner" size="lg" pulse /><span style={{'verticalAlign': 'top'}}>Loading data...</span>
+                            </div>
                         ) : (
                             <div>
                                 <Table striped>

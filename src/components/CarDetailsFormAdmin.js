@@ -230,12 +230,12 @@ export default class CarDetailsFormAdmin extends React.Component {
                             <Button className="float-right" color="info" disabled={(this.state.formDataLoading === null || this.state.submitState === "submiting") && true}>{this.props.formType === "edit" ? ('Update car data') : ('Save car data')}</Button>
                             {this.state.formLoading === true && 
                                 <div className="saveform-spinner float-right mt-2 mr-3">
-                                    <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="saveform-spinner-icon mr-2" icon="spinner" size="lg" pulse /><span style={{'verticalAlign': 'top'}}>Loading data...</span>
+                                    <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="spinner-icon mr-2" icon="spinner" size="lg" pulse /><span style={{'verticalAlign': 'top'}}>Loading data...</span>
                                 </div>
                             }
                             {this.state.submitState === "submiting" && 
                                 <div className="saveform-spinner float-right mt-2 mr-3">
-                                    <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="saveform-spinner-icon mr-2" icon="spinner" size="lg" pulse /><span style={{'verticalAlign': 'top'}}>Saving into database...</span>
+                                    <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="spinner-icon mr-2" icon="spinner" size="lg" pulse /><span style={{'verticalAlign': 'top'}}>Saving into database...</span>
                                 </div>
                             }
                             {this.state.submitState === "success" && 
