@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 
+
 const firebase_config = require('../firebase_config');
 firebase.initializeApp(firebase_config);
 
@@ -151,4 +152,36 @@ export async function quick_search_cars_admin(expression) {
   /*const carsByEngine = await db.collection('cars').where('engine', '==', expression).get();*/
   //console.log(listingData);
   return listingData;
+}
+
+export async function save_new_car(formData) {
+
+  let brandRef = null;
+  let classRef = null;
+  let modelRef = null;
+
+  const brandsByName = await db.collection('car-brands').where('name', '==', formData.brand).get();
+  if (brandsByName.docs.length > 0) {
+    brandRef = brandsByName.docs[0].ref;
+  } else {
+    brandRef = await db.collection('car-brands').doc(formData.brand).set({
+      name: formData.brand
+    })
+  }
+
+  const classesByName = await db.collection('car-classes').where('name', '==', formData.class).get();
+  if (classesByName.docs.length > 0) {
+    classRef = classesByName.docs[0].ref;
+  }
+
+  const modelsByName = await db.collection('car-models').where('name', '==', formData.model).get();
+  if (modelsByName.docs.length > 0) {
+    modelRef = modelsByName.docs[0].ref;
+  }
+  
+  let result = await db.collection('cars').add({
+    availability: (formData.availability === 'true' ? true : false),
+    brand: brandRef
+  });
+  console.log(brandsByName.docs);
 }

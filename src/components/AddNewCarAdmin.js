@@ -13,7 +13,8 @@ export default class AddNewCarAdmin extends React.Component {
         super(props);
         this.state = {
             carClasses: null,
-            formData: {}
+            formData: {},
+            submitSuccess: null
         };
 
         //this.saveNewCar = this.saveNewCar.bind(this);
@@ -32,7 +33,7 @@ export default class AddNewCarAdmin extends React.Component {
 
     handleChange(e) {
 
-        let eventTarget = e.target;
+        const eventTarget = e.target;
 
         this.setState((currentState, props) => {
             currentState.formData[eventTarget.name] = eventTarget.value;
@@ -43,7 +44,16 @@ export default class AddNewCarAdmin extends React.Component {
 
     saveNewCar(e) {
         e.preventDefault();
-        await db.saveNewCar(this.state.formData);
+
+        (async () => {
+
+            await db.save_new_car(this.state.formData);
+            this.setState({ submitSuccess: true });
+
+        })().catch(err => {
+            console.log(err);
+        })
+        
     }
 
     render() {
