@@ -1,4 +1,6 @@
 .administration {
+
+    /* Main administration panel */
     .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
         border-color: #637383 #dee2e6 #fff;
         border-top-width: 2px;
@@ -6,14 +8,6 @@
 
     .form-inline .search-input-field {
         width: 230px;
-    }
-
-    .addNewCarAdmin {
-        display: none;
-    }
-
-    .addNewCarAdmin.addNewCarAdmin-show {
-        display: block;
     }
 
     .dark-div {
@@ -26,28 +20,39 @@
         z-index: 9998;
     }
 
+    /* Add new car panel */
     .add-new-car-form {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 60%;
-        height: 50%;
+        width: 70%;
+        height: 70%;
         background-color: #fff;
         z-index: 9999;
         position: fixed;
-        padding: 15px;
-    }
+        
+        .list-group {
+            overflow-y: auto;
+        }
 
-    .add-new-car-form h3 {
-        margin-bottom: 25px;
-    }
+        h3 {
+            background-color: rgb(247, 247, 247);
+        }
 
-    @media only screen and (max-width: 1023px) {
-        .add-new-car-form {
-            width: 95%;
+        footer {
+            background-color: rgb(247, 247, 247);
+        }
+
+        .small-screen-label {
+            display: none;
+        }
+
+        .small-screen-currency-column {
+            display: none;
         }
     }
 
+    /* Main administration panel - responsive */
     @media only screen and (max-width: 770px) {
         .search-input-label {
             display: none;
@@ -67,6 +72,45 @@
 
         .engine-data-column {
             display: none;
+        }
+    }
+
+    /* Add new car panel - responsive */
+    @media only screen and (max-width: 767px) {
+        .add-new-car-form {
+            .small-screen-label {
+                display: inline-block;
+            }
+
+            .big-screen-label {
+                display: none;
+            }
+
+            .small-screen-currency-column {
+                display: block;
+            }
+
+            .big-screen-currency-column {
+                display: none;
+            }
+        }
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 870px) {
+        .add-new-car-form {
+            font-size: 14px;
+        }
+    }
+
+    @media only screen and (max-width: 991px) {
+        .add-new-car-form {
+            width: 95%;
+        }
+    }
+
+    @media only screen and (min-width: 991px) and (max-width: 1360px) {
+        .add-new-car-form {
+            width: 80%;
         }
     }
 }

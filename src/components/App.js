@@ -78,7 +78,7 @@ class App extends React.Component {
               <Route exact path="/results" component={Results} />
             </Switch>
           </div>
-          <footer>
+          <footer className="app-footer">
             <div>© 2018 Copyright: Car Rental Group</div>
             <nav>
               <Link to="/">Home</Link>

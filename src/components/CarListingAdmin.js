@@ -25,7 +25,7 @@ export default class CarListingAdmin extends React.Component {
 
             })().catch(err => {
                 console.log(err);
-            })
+            });
         }
     }
 
@@ -142,7 +142,9 @@ export default class CarListingAdmin extends React.Component {
                         )}
                     </Col>
                 </Row>
-                <AddNewCarAdmin isShowed={this.state.showAddNewCarForm} closeHandler={this.handleCloseAddNewCarForm.bind(this)} />
+                {this.state.showAddNewCarForm === true &&
+                    <AddNewCarAdmin closeHandler={this.handleCloseAddNewCarForm.bind(this)} />
+                }
             </div>
         )
     }
