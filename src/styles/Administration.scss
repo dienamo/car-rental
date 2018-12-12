@@ -1,3 +1,5 @@
+$newCarFormFooterHeight: 64px;
+
 .administration {
 
     /* Main administration panel */
@@ -17,7 +19,7 @@
         top: 0;
         left: 0;
         position: fixed;
-        z-index: 9998;
+        z-index: 9997;
     }
 
     /* Add new car panel */
@@ -26,13 +28,18 @@
         left: 50%;
         transform: translate(-50%, -50%);
         width: 70%;
-        height: 70%;
+        height: 75%;
         background-color: #fff;
-        z-index: 9999;
+        z-index: 9998;
         position: fixed;
-        
+
         .list-group {
             overflow-y: auto;
+            padding-bottom: $newCarFormFooterHeight;
+        }
+
+        .list-group > :last-child {
+            border-bottom: 0;
         }
 
         h3 {
@@ -40,7 +47,13 @@
         }
 
         footer {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
             background-color: rgb(247, 247, 247);
+            height: $newCarFormFooterHeight;
+            z-index: 9999
         }
 
         .small-screen-label {
