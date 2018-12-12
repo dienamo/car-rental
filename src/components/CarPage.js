@@ -1,5 +1,6 @@
 import React from 'react';
 import * as db from '../database/functions';
+import Orderform from './OrderForm';
 
 export default class Homepage extends React.Component {
 
@@ -17,34 +18,41 @@ export default class Homepage extends React.Component {
   }
 
   renderData() {
-    if (!this.state.fetched) {
-      return (
-        <div class="alert alert-primary" role="alert">
-          Loading data ...
-        </div>
-      )
-    }
-    if (this.state.fetched && !this.state.carData) {
-      return (
-        <div class="alert alert-danger" role="alert">
-          Error loading car data!
-        </div>
-      )
-    }
+    const data = this.state.carData;
+    console.log(data);
     return (
-      <p>{`${this.state.carData.brand.name} ${this.state.carData.model.name}`}</p>
+      <React.Fragment>
+        <div className="page-heading-wrap">
+          <h1 className="page-heading">{`${data.brand.name} ${data.model.name} ${data.engine}`}</h1>
+        </div>
+        <main>
+          <div className="row">
+            <div className="col-md-6">
+              <img src="./img/dummy.jpg" />
+            </div>
+            <div className="col-md-6">
+              <Orderform />
+            </div>
+          </div>
+        </main>
+      </React.Fragment>
     )
   }
 
   render() {
     return (
       <div className="car-page">
-        <div className="page-heading-wrap">
-          <h1 className="page-heading">Car name</h1>
-        </div>
-        <main>
-          {this.renderData()}
-        </main>
+        {this.state.fetched ? (
+          this.state.carData ? this.renderData() : (
+            <div class="alert alert-danger" role="alert">
+              Error loading car data!
+            </div>
+          )
+        ) : (
+            <div class="alert alert-primary" role="alert">
+              Loading data ...
+            </div>
+          )}
       </div>
     )
   }
