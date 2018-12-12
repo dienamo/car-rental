@@ -9,6 +9,9 @@ import * as db from '../database/functions';
 export default class CarDetailsFormAdmin extends React.Component {
     constructor(props) {
         super(props);
+
+        this._isMounted = false;
+        
         this.state = {
             formLoading: true,
             carClasses: null,
@@ -19,6 +22,8 @@ export default class CarDetailsFormAdmin extends React.Component {
 
     componentDidMount() {
 
+        this._isMounted = true;
+
         (async () => {
 
             const classes = await db.fetch_classes();
@@ -28,38 +33,53 @@ export default class CarDetailsFormAdmin extends React.Component {
                 carData = await db.get_car_data(this.props.carId);
             }
 
-            this.setState((currentState, props) => {
+            if (this._isMounted) {
+                this.setState((currentState, props) => {
 
-                currentState.formLoading = false;
+                    currentState.formLoading = false;
 
-                currentState.carClasses = classes;
+                    currentState.carClasses = classes;
 
-                if (this.props.formType === "edit") {
-                    currentState.formData = carData;
-                } else {
-                    currentState.formData['class'] = classes[0].id;
-                    currentState.formData['fuel'] = 'Diesel';
-                    currentState.formData['transmission'] = 'Manual';
-                    currentState.formData['availability'] = 'true';
-                }
+                    if (this.props.formType === "edit") {
+                        currentState.formData = carData;
+                    } else {
+                        currentState.formData['class'] = classes[0].id;
+                        currentState.formData['fuel'] = 'Diesel';
+                        currentState.formData['transmission'] = 'Manual';
+                        currentState.formData['availability'] = 'true';
+                    }
 
-                return currentState;
-            })
+                    return currentState;
+                });
+            }
 
         })().catch(err => {
             console.log(err);
         });
     }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     handleChange(e) {
 
         const eventTarget = e.target;
 
-        this.setState((currentState, props) => {
-            currentState.formData[eventTarget.name] = eventTarget.value.trim();
-            return currentState;
-        });
+        if (this._isMounted) {
+            this.setState((currentState, props) => {
+                currentState.formData[eventTarget.name] = eventTarget.value.trim();
+                return currentState;
+            });
+        }
+    }
 
+    handleClose() {
+        if (this.state.submitState === "success") {
+            this.props.closeHandler(true);
+        } else {
+            this.props.closeHandler(false);
+        }
     }
 
     saveCarData(e) {
@@ -68,18 +88,24 @@ export default class CarDetailsFormAdmin extends React.Component {
         if (this.state.carClasses !== null && !this.state.formLoading) {
             (async () => {
 
-                this.setState({ submitState: "submiting" });
+                if (this._isMounted) {
+                    this.setState({ submitState: "submiting" });
+                }
 
                 if (this.props.formType === "edit") {
                     await db.save_car_data(this.state.formData, this.props.carId);
                 } else {
                     await db.save_car_data(this.state.formData);
                 }
-                    
-                this.setState({ submitState: "success" });
+                
+                if (this._isMounted) {
+                    this.setState({ submitState: "success" });
+                }
 
             })().catch(err => {
-                this.setState({ submitState: "fail" });
+                if (this._isMounted) {
+                    this.setState({ submitState: "fail" });
+                }
                 console.log(err);
             });
         }
@@ -89,7 +115,7 @@ export default class CarDetailsFormAdmin extends React.Component {
 
         return (
             <div className="carDetailsFormAdmin">
-                <div onClick={(e) => this.props.closeHandler(e)} className="dark-div"></div>
+                <div onClick={() => this.handleClose()} className="dark-div"></div>
                 <form disabled onSubmit={(e) => this.saveCarData(e)}>
 					<Card className="add-new-car-form rounded">
                         <CardHeader tag="h3" className="sticky-top">{this.props.formType === "edit" ? ('Edit car') : ('Add new car to database')}</CardHeader>

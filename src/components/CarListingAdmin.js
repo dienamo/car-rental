@@ -11,27 +11,39 @@ import CarDetailsFormAdmin from './CarDetailsFormAdmin';
 export default class CarListingAdmin extends React.Component {
     constructor(props) {
         super(props);
+
+        this._isMounted = false;
+        this.throttleInputTimeout = null;
+
         this.state = {
             listingData: null, 
             showAddNewCarForm: false, 
             showEditCarForm: false,
             editedCarId: null
         };
-        this.throttleInputTimeout = null;
     }
 
     componentDidMount() {
+
+        this._isMounted = true;
+
         if (!this.state.listingData) {
             (async () => {
 
-                this.setState({
-                    listingData: await db.get_all_cars_admin()
-                });
+                if (this._isMounted) {
+                    this.setState({
+                        listingData: await db.get_all_cars_admin()
+                    });
+                }
 
             })().catch(err => {
                 console.log(err);
             });
         }
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     handleTypingInSearchField(e) {
@@ -41,18 +53,20 @@ export default class CarListingAdmin extends React.Component {
         if (inputValue !== "") {
             (async () => {
 
-                this.setState({
-                    listingData: null
-                }, async () => {
-                    if (this.throttleInputTimeout !== null) {
-                        clearTimeout(this.throttleInputTimeout);
-                    }
-                    this.throttleInputTimeout = setTimeout(async () => {
-                        this.setState({
-                            listingData: await db.quick_search_cars_admin(inputValue)
-                        });
-                    }, 400);
-                });
+                if (this._isMounted) {
+                    this.setState({
+                        listingData: null
+                    }, async () => {
+                        if (this.throttleInputTimeout !== null) {
+                            clearTimeout(this.throttleInputTimeout);
+                        }
+                        this.throttleInputTimeout = setTimeout(async () => {
+                            this.setState({
+                                listingData: await db.quick_search_cars_admin(inputValue)
+                            });
+                        }, 400);
+                    });
+                }
 
             })().catch(err => {
                 console.log(err);
@@ -60,18 +74,20 @@ export default class CarListingAdmin extends React.Component {
         } else {
             (async () => {
 
-                this.setState({
-                    listingData: null
-                }, async () => {
-                    if (this.throttleInputTimeout !== null) {
-                        clearTimeout(this.throttleInputTimeout);
-                    }
-                    this.throttleInputTimeout = setTimeout(async () => {
-                        this.setState({
-                            listingData: await db.get_all_cars_admin()
-                        });
-                    }, 400);
-                });
+                if (this._isMounted) {
+                    this.setState({
+                        listingData: null
+                    }, async () => {
+                        if (this.throttleInputTimeout !== null) {
+                            clearTimeout(this.throttleInputTimeout);
+                        }
+                        this.throttleInputTimeout = setTimeout(async () => {
+                            this.setState({
+                                listingData: await db.get_all_cars_admin()
+                            });
+                        }, 400);
+                    });
+                }
 
             })().catch(err => {
                 console.log(err);
@@ -80,15 +96,44 @@ export default class CarListingAdmin extends React.Component {
     }
 
     handleNewCarButtonClick(e) {
-        this.setState({ showAddNewCarForm: true });
+        if (this._isMounted) {
+            this.setState({ showAddNewCarForm: true });
+        }
     }
 
     handleEditCarButtonClick(e, carId) {
-        this.setState({ showEditNewCarForm: true, editedCarId: carId });
+        if (this._isMounted) {
+            this.setState({ showEditNewCarForm: true, editedCarId: carId });
+        }
     }
 
-    handleCloseCarForm(e) {
-        this.setState({ showAddNewCarForm: false, showEditNewCarForm: false, editedCarId: null });
+    handleCloseCarForm(needUpdate) {
+        (async () => {
+            if (needUpdate) {
+                if (this._isMounted) {
+                    this.setState({
+                        listingData: null,
+                        showAddNewCarForm: false,
+                        showEditNewCarForm: false,
+                        editedCarId: null
+                    }, async () => {
+                        this.setState({
+                            listingData: await db.get_all_cars_admin()
+                        });
+                    });
+                }
+            } else {
+                if (this._isMounted) {
+                    this.setState({
+                        showAddNewCarForm: false,
+                        showEditNewCarForm: false,
+                        editedCarId: null
+                    });
+                }
+            }
+        })().catch(err => {
+            console.log(err);
+        });
     }
 
     render() {
