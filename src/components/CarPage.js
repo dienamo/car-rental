@@ -1,6 +1,7 @@
 import React from 'react';
 import * as db from '../database/functions';
 import Orderform from './OrderForm';
+import PhotoGallery from './PhotoGallery';
 
 export default class Homepage extends React.Component {
 
@@ -28,7 +29,7 @@ export default class Homepage extends React.Component {
         <main>
           <div className="row">
             <div className="col-md-6">
-              <img src="./img/dummy.jpg" />
+              <PhotoGallery />
             </div>
             <div className="col-md-6">
               <Orderform />
