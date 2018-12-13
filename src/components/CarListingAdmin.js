@@ -30,6 +30,9 @@ export default class CarListingAdmin extends React.Component {
         if (!this.state.listingData) {
             (async () => {
 
+                let asd = await db.get_all_orders_admin();
+                console.log(asd);
+
                 if (this._isMounted) {
                     this.setState({
                         listingData: await db.get_all_cars_admin()
@@ -147,11 +150,11 @@ export default class CarListingAdmin extends React.Component {
                         <td className="hide-listing-column">{carData[2]}</td>
                         <td>{carData[3]}</td>
                         <td className="hide-listing-column">{carData[4]}</td>
-                        <td>{carData[5]}</td>
+                        <td>{carData[5]} €</td>
                         <td className="action-buttons-column text-nowrap">
                             <div className="big-screen-action-buttons">
-                                <Button onClick={(e) => this.handleEditCarButtonClick(e, carData[0])} className="listing-action-button-big-screen" color="info" size="sm">Edit</Button>
-                                <Button className="listing-action-button-big-screen" color="danger" size="sm">Delete</Button>
+                                <Button onClick={(e) => this.handleEditCarButtonClick(e, carData[0])} className="listing-action-button-big-screen" color="info" size="sm"><FontAwesomeIcon icon="edit" /> Edit</Button>
+                                <Button className="listing-action-button-big-screen" color="danger" size="sm"><FontAwesomeIcon icon="trash-alt" /> Delete</Button>
                             </div>
                             <div className="small-screen-action-buttons">
                                 <Button onClick={(e) => this.handleEditCarButtonClick(e, carData[0])} className="listing-action-button-small-screen" color="info" size="sm"><FontAwesomeIcon icon="edit" /></Button>

@@ -225,7 +225,7 @@ export default class CarDetailsFormAdmin extends React.Component {
                                                 <Col xs={{size: 12}} md={{size: 8}} className="text-left">
                                                     <label className="small-screen-label" htmlFor="carPriceInput">Price: </label>
                                                     <div>
-                                                        <input onChange={(e) => this.handleChange(e)} value={typeof this.state.formData.price !== 'undefined' ? (this.state.formData.price) : ('')} style={{display: "inline", width: "70%"}} type="number" className="form-control pr-1" id="carPriceInput"  name="price" step="0.01" min="0" max="99999" required />&nbsp;&nbsp;<span className="text-nowrap">€ / day</span>
+                                                        <input onChange={(e) => this.handleChange(e)} value={typeof this.state.formData.price !== 'undefined' ? (this.state.formData.price) : ('')} style={{display: "inline", width: "70%"}} type="number" className="form-control pr-1" id="carPriceInput" name="price" step="0.01" min="0" max="99999" required />&nbsp;&nbsp;<span className="text-nowrap">€ / day</span>
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -256,25 +256,32 @@ export default class CarDetailsFormAdmin extends React.Component {
                             </ListGroupItem>
                         </ListGroup>
                         <CardFooter tag="footer">
-                            <Button className="float-right" color="info" disabled={(this.state.formDataLoading === null || this.state.submitState === "submiting") && true}>{this.props.formType === "edit" ? ('Update car data') : ('Save car data')}</Button>
+                            <Button className="float-right" color="info" disabled={(this.state.formDataLoading === null || this.state.submitState === "submiting") && true}><FontAwesomeIcon icon="save" /> {this.props.formType === "edit" ? ('Update car data') : ('Save car data')}</Button>
+                            <Button onClick={() => this.handleClose()} className="float-right close-button" type="button" color="secondary"><FontAwesomeIcon icon="times" /> Close</Button>
                             {this.state.formLoading === true && 
-                                <div className="saveform-spinner float-right mt-2 mr-3">
-                                    <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="spinner-icon mr-2" icon="spinner" size="lg" pulse /><span style={{'verticalAlign': 'top'}}>Loading data...</span>
+                                <div className="saveform-spinner float-right mt-2" style={{marginRight: '1.25rem'}}>
+                                    <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="spinner-icon mr-2" icon="spinner" size="lg" pulse /><span style={{'verticalAlign': 'top'}}><strong>Loading data...</strong></span>
                                 </div>
                             }
                             {this.state.submitState === "submiting" && 
-                                <div className="saveform-spinner float-right mt-2 mr-3">
-                                    <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="spinner-icon mr-2" icon="spinner" size="lg" pulse /><span style={{'verticalAlign': 'top'}}>Saving into database...</span>
+                                <div className="saveform-spinner float-right mt-2" style={{marginRight: '1.25rem'}}>
+                                    <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="spinner-icon mr-2" icon="spinner" size="lg" pulse />
+                                    <span className="savingtext-bigscreen" style={{'verticalAlign': 'top'}}><strong>Saving into database...</strong></span>
+                                    <span className="savingtext-smallscreen" style={{'verticalAlign': 'top'}}><strong>Saving...</strong></span>
                                 </div>
                             }
                             {this.state.submitState === "success" && 
-                                <div className="saveform-success float-right mt-2 mr-3">
-                                    <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="mr-2" icon="check" size="lg" /><span style={{'verticalAlign': 'top'}}>Car data successfully saved!</span>
+                                <div className="saveform-success float-right mt-2" style={{marginRight: '1.25rem'}}>
+                                    <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="mr-2" icon="check" size="lg" />
+                                    <span className="successtext-bigscreen" style={{'verticalAlign': 'top'}}><strong>Car data successfully saved!</strong></span>
+                                    <span className="successtext-smallscreen" style={{'verticalAlign': 'top'}}><strong>Success!</strong></span>
                                 </div>
                             }
                             {this.state.submitState === "fail" && 
-                                <div className="saveform-fail float-right mt-2 mr-3">
-                                    <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="mr-2" icon="times-circle" size="lg" /><span style={{'verticalAlign': 'top'}}>An error occured! Try again later.</span>
+                                <div className="saveform-fail float-right mt-2" style={{marginRight: '1.25rem'}}>
+                                    <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="mr-2" icon="times-circle" size="lg" />
+                                    <span className="failtext-bigscreen" style={{'verticalAlign': 'top'}}><strong>An error occured! Try again later.</strong></span>
+                                    <span className="failtext-smallscreen" style={{'verticalAlign': 'top'}}><strong>Error!</strong></span>
                                 </div>
                             }
                         </CardFooter>

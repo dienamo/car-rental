@@ -12,7 +12,7 @@ import {
 import firebase from 'firebase';
 
 import { library as faLibrary } from '@fortawesome/fontawesome-svg-core';
-import { faPlusCircle, faCarSide, faSpinner, faCheck, faTimesCircle, faEdit, faTrashAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faCarSide, faSpinner, faCheck, faTimesCircle, faEdit, faTrashAlt, faTimes, faListAlt, faSave, faBan } from '@fortawesome/free-solid-svg-icons';
 
 import { attachFirebaseToComponent } from '../helpers/helperFunctions.js';
 
@@ -42,6 +42,9 @@ class App extends React.Component {
     faLibrary.add(faEdit);
     faLibrary.add(faTrashAlt);
     faLibrary.add(faTimes);
+    faLibrary.add(faListAlt);
+    faLibrary.add(faSave);
+    faLibrary.add(faBan);
   }
 
   toggleNav() {

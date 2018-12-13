@@ -162,7 +162,9 @@ export async function save_car_data(formData, carId = null) {
   let modelRef = null;
 
   for (const index in formData) {
-    formData[index] = formData[index].trim();
+    if (typeof formData[index] === 'string') {
+      formData[index] = formData[index].trim();
+    }
   }
 
   const brandsByName = await db.collection('car-brands').where('name', '==', formData.brand).get();
@@ -204,7 +206,7 @@ export async function save_car_data(formData, carId = null) {
     const carRef = await db.collection('cars').doc(carId);
 
     result = await carRef.update({
-      availability: (formData.availability === 'true' ? true : false),
+      availability: formData.availability,
       brand: brandRef,
       class: classRef,
       engine: formData.engine,
@@ -264,4 +266,34 @@ export async function get_car_data(carId) {
   }
 
   return carData;
+}
+
+export async function get_all_orders_admin() {
+
+  const allOrders = await db.collection('orders').get();
+  let listingData = [];
+
+  for (const orderDoc of allOrders.docs) {
+    const orderData = orderDoc.data();
+
+    // Get car data
+    const originalCar = await orderData.original_car.get();
+
+    listingData.push({
+      id: orderDoc.id,
+      customer: {
+        first_name: orderData.customer.first_name,
+        last_name: orderData.customer.last_name
+      },
+      car: {
+        id: originalCar.id,
+        brand: orderData.car.brand,
+        model: orderData.car.model,
+        license_plate: orderData.car.license_plate,
+        price: orderData.car.price
+      }
+    });
+  }
+
+  return listingData;
 }
