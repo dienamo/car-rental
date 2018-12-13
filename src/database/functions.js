@@ -95,8 +95,6 @@ export async function get_all_cars_admin() {
     listingData.push([carDoc.id, `${carBrand.data().name} ${carModel.data().name}`, carData.license_plate, (carData.availability === true ? 'Available' : 'Not available'), carData.engine, carData.price]);
   }
 
-  //console.log(listingData);
-
   return listingData;
 
 }
@@ -151,11 +149,10 @@ export async function quick_search_cars_admin(expression) {
 
   // Find cars by engine
   /*const carsByEngine = await db.collection('cars').where('engine', '==', expression).get();*/
-  //console.log(listingData);
   return listingData;
 }
 
-export async function save_car_data(formData, carId = null) {
+export async function save_car_data_admin(formData, carId = null) {
 
   let brandRef = null;
   let classRef = null;
@@ -240,7 +237,7 @@ export async function save_car_data(formData, carId = null) {
 
 }
 
-export async function get_car_data(carId) {
+export async function get_car_data_admin(carId) {
   const carDoc = await db.collection('cars').doc(carId).get();
   const carDataFetched = carDoc.data();
 
@@ -296,4 +293,8 @@ export async function get_all_orders_admin() {
   }
 
   return listingData;
+}
+
+export async function get_order_data_admin(orderId) {
+
 }

@@ -30,9 +30,6 @@ export default class CarListingAdmin extends React.Component {
         if (!this.state.listingData) {
             (async () => {
 
-                let asd = await db.get_all_orders_admin();
-                console.log(asd);
-
                 if (this._isMounted) {
                     this.setState({
                         listingData: await db.get_all_cars_admin()
@@ -106,7 +103,7 @@ export default class CarListingAdmin extends React.Component {
 
     handleEditCarButtonClick(e, carId) {
         if (this._isMounted) {
-            this.setState({ showEditNewCarForm: true, editedCarId: carId });
+            this.setState({ showEditCarForm: true, editedCarId: carId });
         }
     }
 
@@ -117,7 +114,7 @@ export default class CarListingAdmin extends React.Component {
                     this.setState({
                         listingData: null,
                         showAddNewCarForm: false,
-                        showEditNewCarForm: false,
+                        showEditCarForm: false,
                         editedCarId: null
                     }, async () => {
                         this.setState({
@@ -129,7 +126,7 @@ export default class CarListingAdmin extends React.Component {
                 if (this._isMounted) {
                     this.setState({
                         showAddNewCarForm: false,
-                        showEditNewCarForm: false,
+                        showEditCarForm: false,
                         editedCarId: null
                     });
                 }
@@ -215,7 +212,7 @@ export default class CarListingAdmin extends React.Component {
                 {this.state.showAddNewCarForm === true &&
                     <CarDetailsFormAdmin formType="create" closeHandler={this.handleCloseCarForm.bind(this)} />
                 }
-                {this.state.showEditNewCarForm === true && 
+                {this.state.showEditCarForm === true && 
                     <CarDetailsFormAdmin formType="edit" carId={this.state.editedCarId} closeHandler={this.handleCloseCarForm.bind(this)} />
                 }
             </div>

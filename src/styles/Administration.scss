@@ -49,7 +49,7 @@ $newCarFormFooterHeight: 64px;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 70%;
-            height: 75%;
+            height: 80%;
             background-color: #fff;
             z-index: 9998;
             position: fixed;
@@ -57,6 +57,7 @@ $newCarFormFooterHeight: 64px;
             .list-group {
                 overflow-y: auto;
                 padding-bottom: $newCarFormFooterHeight;
+                min-height: 50%;
             }
 
             .list-group > :last-child {
@@ -101,7 +102,7 @@ $newCarFormFooterHeight: 64px;
                 margin-right: 1px;
             }
 
-            .successtext-smallscreen, .failtext-smallscreen, .savingtext-smallscreen {
+            .successtext-smallscreen, .failtext-smallscreen, .savingtext-smallscreen, .loadingtext-smallscreen {
                 display: none;
             }
         }
@@ -150,6 +151,18 @@ $newCarFormFooterHeight: 64px;
     }
 
     /* Add new car panel - responsive */
+    @media only screen and (max-height: 449px) {
+        .carListingAdmin {
+            .add-new-car-form {
+                height: 100%;
+
+                header {
+                    display: none;
+                }
+            }
+        }
+    }
+
     @media only screen and (max-width: 767px) {
         .carDetailsFormAdmin {
             .add-new-car-form {
@@ -165,11 +178,11 @@ $newCarFormFooterHeight: 64px;
                     display: none;
                 }
 
-                .successtext-bigscreen, .failtext-bigscreen, .savingtext-bigscreen {
+                .successtext-bigscreen, .failtext-bigscreen, .savingtext-bigscreen, .loadingtext-bigscreen {
                     display: none;
                 }
     
-                .successtext-smallscreen, .failtext-smallscreen, .savingtext-smallscreen {
+                .successtext-smallscreen, .failtext-smallscreen, .savingtext-smallscreen, .loadingtext-smallscreen {
                     display: inline;
                 }
             }

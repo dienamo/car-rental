@@ -30,7 +30,7 @@ export default class CarDetailsFormAdmin extends React.Component {
             let carData = null;
 
             if (this.props.formType === "edit") {
-                carData = await db.get_car_data(this.props.carId);
+                carData = await db.get_car_data_admin(this.props.carId);
             }
 
             if (this._isMounted) {
@@ -95,9 +95,9 @@ export default class CarDetailsFormAdmin extends React.Component {
                 }
 
                 if (this.props.formType === "edit") {
-                    await db.save_car_data(this.state.formData, this.props.carId);
+                    await db.save_car_data_admin(this.state.formData, this.props.carId);
                 } else {
-                    await db.save_car_data(this.state.formData);
+                    await db.save_car_data_admin(this.state.formData);
                 }
                 
                 if (this._isMounted) {
@@ -120,7 +120,7 @@ export default class CarDetailsFormAdmin extends React.Component {
                 <div onClick={() => this.handleClose()} className="dark-div"></div>
                 <form disabled onSubmit={(e) => this.saveCarData(e)}>
 					<Card className="add-new-car-form rounded">
-                        <CardHeader tag="header" className="sticky-top">
+                        <CardHeader tag="header">
                             <h3 className="float-left">{this.props.formType === "edit" ? ('Edit car') : ('Add new car to database')}</h3>
                             <div onClick={() => this.handleClose()} className="float-right close-icon"><FontAwesomeIcon icon="times" /></div>
                         </CardHeader>
@@ -262,7 +262,9 @@ export default class CarDetailsFormAdmin extends React.Component {
                             <Button disabled={(this.state.submitState === "submiting") && true} onClick={() => this.handleClose()} className="float-right close-button" type="button" color="secondary"><FontAwesomeIcon icon="times" /> Close</Button>
                             {this.state.formLoading === true && 
                                 <div className="saveform-spinner float-right mt-2" style={{marginRight: '1.25rem'}}>
-                                    <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="spinner-icon mr-2" icon="spinner" size="lg" pulse /><span style={{'verticalAlign': 'top'}}><strong>Loading data...</strong></span>
+                                    <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="spinner-icon mr-2" icon="spinner" size="lg" pulse />
+                                    <span className="loadingtext-bigscreen" style={{'verticalAlign': 'top'}}><strong>Loading data...</strong></span>
+                                    <span className="loadingtext-smallscreen" style={{'verticalAlign': 'top'}}><strong>Loading...</strong></span>
                                 </div>
                             }
                             {this.state.submitState === "submiting" && 
