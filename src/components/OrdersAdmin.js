@@ -54,8 +54,8 @@ export default class OrdersAdmin extends React.Component {
                         <td className="hide-listing-column">{`${orderData.customer.first_name} ${orderData.customer.last_name}`}</td>
                         <td className="action-buttons-column text-nowrap">
                             <div className="big-screen-action-buttons">
-                                <Button className="listing-action-button-big-screen" color="info" size="sm"><FontAwesomeIcon icon="list-alt" />&nbsp;&nbsp;Details</Button>
-                                <Button className="listing-action-button-big-screen" size="sm"><FontAwesomeIcon icon="car-side" />&nbsp;&nbsp;Car details</Button>
+                                <Button className="listing-action-button-big-screen" color="info" size="sm"><FontAwesomeIcon icon="list-alt" />&nbsp;Details</Button>
+                                <Button className="listing-action-button-big-screen" size="sm"><FontAwesomeIcon icon="car-side" />&nbsp;Car details</Button>
                             </div>
                             <div className="small-screen-action-buttons">
                                 <Button className="listing-action-button-small-screen" color="info" size="sm"><FontAwesomeIcon icon="list-alt" /></Button>

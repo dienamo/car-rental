@@ -256,7 +256,7 @@ export default class CarDetailsFormAdmin extends React.Component {
                             </ListGroupItem>
                         </ListGroup>
                         <CardFooter tag="footer">
-                            <Button className="float-right" color="info" disabled={(this.state.formDataLoading === null || this.state.submitState === "submiting") && true}><FontAwesomeIcon icon="save" /> {this.props.formType === "edit" ? ('Update car data') : ('Save car data')}</Button>
+                            <Button className="float-right" color="info" disabled={(this.state.formDataLoading === null || this.state.submitState === "submiting") && true}><FontAwesomeIcon icon="save" />{this.props.formType === "edit" ? (' Update car data') : (' Save car data')}</Button>
                             <Button onClick={() => this.handleClose()} className="float-right close-button" type="button" color="secondary"><FontAwesomeIcon icon="times" /> Close</Button>
                             {this.state.formLoading === true && 
                                 <div className="saveform-spinner float-right mt-2" style={{marginRight: '1.25rem'}}>

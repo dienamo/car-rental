@@ -26,19 +26,19 @@ $newCarFormFooterHeight: 64px;
         display: none;
     }
 
+    .listing-action-button-big-screen {
+        margin-bottom: 1px;
+        padding: 0.25rem 0.7rem;
+    }
+
+    .listing-action-button-big-screen:not(:last-child), .listing-action-button-small-screen:not(:last-child) {
+        margin-right: 1px;
+    }
+
     /* Car listing */
     .carListingAdmin {
         .form-inline .search-input-field {
             width: 230px;
-        }
-
-        .listing-action-button-big-screen {
-            min-width: 80px;
-            margin-bottom: 1px;
-        }
-
-        .listing-action-button-big-screen:not(:last-child), .listing-action-button-small-screen:not(:last-child) {
-            margin-right: 1px;
         }
     }
 
@@ -108,15 +108,6 @@ $newCarFormFooterHeight: 64px;
     }
 
     /* Orders listing */
-    .ordersAdmin {
-        .listing-action-button-big-screen {
-            margin-bottom: 1px;
-        }
-
-        .listing-action-button-big-screen:not(:last-child), .listing-action-button-small-screen:not(:last-child) {
-            margin-right: 1px;
-        }
-    }
 
     /* Main administration panel - responsive */
     @media only screen and (max-width: 767px) {
