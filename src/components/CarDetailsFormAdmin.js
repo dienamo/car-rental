@@ -75,10 +75,12 @@ export default class CarDetailsFormAdmin extends React.Component {
     }
 
     handleClose() {
-        if (this.state.submitState === "success") {
-            this.props.closeHandler(true);
-        } else {
-            this.props.closeHandler(false);
+        if (this.state.submitState !== "submiting") {
+            if (this.state.submitState === "success") {
+                this.props.closeHandler(true);
+            } else {
+                this.props.closeHandler(false);
+            }
         }
     }
 
@@ -257,7 +259,7 @@ export default class CarDetailsFormAdmin extends React.Component {
                         </ListGroup>
                         <CardFooter tag="footer">
                             <Button className="float-right" color="info" disabled={(this.state.formDataLoading === null || this.state.submitState === "submiting") && true}><FontAwesomeIcon icon="save" />{this.props.formType === "edit" ? (' Update car data') : (' Save car data')}</Button>
-                            <Button onClick={() => this.handleClose()} className="float-right close-button" type="button" color="secondary"><FontAwesomeIcon icon="times" /> Close</Button>
+                            <Button disabled={(this.state.submitState === "submiting") && true} onClick={() => this.handleClose()} className="float-right close-button" type="button" color="secondary"><FontAwesomeIcon icon="times" /> Close</Button>
                             {this.state.formLoading === true && 
                                 <div className="saveform-spinner float-right mt-2" style={{marginRight: '1.25rem'}}>
                                     <FontAwesomeIcon style={{'verticalAlign': 'bottom'}} className="spinner-icon mr-2" icon="spinner" size="lg" pulse /><span style={{'verticalAlign': 'top'}}><strong>Loading data...</strong></span>
