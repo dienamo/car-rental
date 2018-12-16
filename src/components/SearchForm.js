@@ -13,7 +13,7 @@ export default class SearchForm extends React.Component {
         { name: "Middle", selected: true, id: "middle" },
         { name: "Luxury", selected: false, id: "luxury" },
       ],
-      brands: { fetched: false },
+      brands: { fetched: false, selected: "all", list: [] },
       models: { fetched: false, selected: "all", list: [] },
       places: { fetched: false }
     };
@@ -28,7 +28,7 @@ export default class SearchForm extends React.Component {
 
   async componentDidMount() {
     const places = await db.fetch_places();
-    const brands = await db.fetch_class_brands(["middle"]);
+    const brands = await db.fetch_class_brands(["middle", "luxury", "economic"]);
     this.setState({
       places: {
         pick_up: places[0].id,
@@ -151,10 +151,12 @@ export default class SearchForm extends React.Component {
                   value={this.state.brands.selected}
                   className="form-control"
                   name="car-brand"
-                  id="car-brand">
-                  <option value="all">All brands</option>
-                  <option value="skoda">Skoda</option>
-                  <option value="bmw">BMW</option>
+                  id="car-brand"
+                  disabled={this.state.brands.fetched ? false : true}>
+                  <option value="all">{this.state.brands.fetched ? "All brands" : "Loading brands ..."}</option>
+                  {this.state.brands.fetched && this.state.brands.list.map(brand =>
+                    <option value={brand.id} key={brand.id}>{brand.name}</option>  
+                  )}
                 </select>
                 <label htmlFor="car-model">Car model</label>
                 <select onChange={this.handleModelChange}
@@ -192,7 +194,7 @@ export default class SearchForm extends React.Component {
                       <option value={place.id} key={place.id}>{place.name}</option>
                     )
                   ) : (
-                      <option value="null">Loading ...</option>
+                      <option value="null">Loading locations ...</option>
                     )}
                   {}
                 </select>
@@ -220,7 +222,7 @@ export default class SearchForm extends React.Component {
                       <option value={place.id} key={place.id}>{place.name}</option>
                     )
                   ) : (
-                      <option value="null">Loading ...</option>
+                      <option value="null">Loading locations ...</option>
                     )}
                   {}
                 </select>
