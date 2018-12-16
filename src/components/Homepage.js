@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchForm from './SearchForm';
-import TopCars from './TopCars';
+import CarsBar from './CarsBar';
 import {
   Row, Col,
 } from 'reactstrap';
@@ -31,11 +31,10 @@ export default class Homepage extends React.Component {
             </div>
           </Col>
         </Row>
-        <TopCars carClass="Economic" />
-        <TopCars carClass="Middle" />
-        <TopCars carClass="Luxury" />
-        <TopCars carClass="SUV" />
-      </div>
+        <CarsBar title="Top ordered cars" />
+        <CarsBar title="In discount" />
+        <CarsBar title="Best for trips" />
+
     )
   }
 }

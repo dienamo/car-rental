@@ -1,0 +1,22 @@
+.cars-bar {
+  border: 1px solid #e4e4e4;
+  border-radius: 2px;
+  padding: 2rem;
+  margin: 1rem 0;
+  background: #f9f9f9;
+
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .car-thumb {
+    border: none;
+    border-radius: 0px;
+    box-shadow: none;
+  }
+
+  img {
+    width: 100%;
+  }
+}
