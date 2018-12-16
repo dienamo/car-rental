@@ -60,9 +60,7 @@ export default class Results extends React.Component {
         <div className="row">
           {this.state.cars.map(car =>
             <div className="col-sm-6 col-lg-4 px-2 grid-item" key={car.id}>
-              {/* <Link to={`/car/${car.id}`}> */}
-                <CarThumb carData={car} />
-              {/* </Link> */}
+              <CarThumb carData={car} />
             </div>
           )}
         </div>
