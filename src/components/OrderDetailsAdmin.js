@@ -103,7 +103,7 @@ export default class OrderDetailsAdmin extends React.Component {
                                         </Row>
                                     </Col>
                                     <Col xs={{size: 12}} md={{size: 6}}>
-                                        <Row className="pb-2 pb-sm-3">
+                                        <Row className="pb-2 pb-sm-3 pt-3 pt-md-0">
                                             <Col xs={{size: 12}}>
                                                 <h4>Ordered car details</h4>
                                             </Col>

@@ -13,7 +13,7 @@ export default class SearchForm extends React.Component {
         { name: "Middle", selected: true, id: "middle" },
         { name: "Luxury", selected: false, id: "luxury" },
       ],
-      brands: { fetched: false },
+      brands: { fetched: false, selected: "all", list: [] },
       models: { fetched: false, selected: "all", list: [] },
       places: { fetched: false }
     };
@@ -28,7 +28,7 @@ export default class SearchForm extends React.Component {
 
   async componentDidMount() {
     const places = await db.fetch_places();
-    const brands = await db.fetch_class_brands(["middle"]);
+    const brands = await db.fetch_class_brands(["middle", "luxury", "economic"]);
     this.setState({
       places: {
         pick_up: places[0].id,
@@ -145,52 +145,42 @@ export default class SearchForm extends React.Component {
                 )}
               </fieldset>
               <fieldset className="preferred-brand">
-                <legend>Preferred car brand</legend>
-                <div className="row form-group">
-                  <div className="col-md-4">
-                    <label htmlFor="car-brand">Car brand</label>
-                  </div>
-                  <div className="col-md-8">
-                    <select onChange={this.handleBrandChange}
-                      value={this.state.brands.selected}
-                      className="form-control"
-                      name="car-brand"
-                      id="car-brand">
-                      <option value="all">All brands</option>
-                      <option value="skoda">Skoda</option>
-                      <option value="bmw">BMW</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="row form-group">
-                  <div className="col-md-4">
-                    <label htmlFor="car-model">Car model</label>
-                  </div>
-                  <div className="col-md-8">
-                    <select onChange={this.handleModelChange}
-                      value={this.state.brands.selected === "all" ? "all" : this.state.models.selected}
-                      className="form-control"
-                      name="car-model"
-                      id="car-model"
-                      disabled={this.state.brands.selected === "all" ? true : false}>
-                      <option value="all">All from selected brand</option>
-                      {this.state.models.list.map(model =>
-                        <option key={model.id} value={model.id}>{model.name}</option>
-                      )}
-                    </select>
-                  </div>
-                </div>
+                <legend>Preferred brand &amp; model</legend>
+                <label htmlFor="car-brand">Car brand</label>
+                <select onChange={this.handleBrandChange}
+                  value={this.state.brands.selected}
+                  className="form-control"
+                  name="car-brand"
+                  id="car-brand"
+                  disabled={this.state.brands.fetched ? false : true}>
+                  <option value="all">{this.state.brands.fetched ? "All brands" : "Loading brands ..."}</option>
+                  {this.state.brands.fetched && this.state.brands.list.map(brand =>
+                    <option value={brand.id} key={brand.id}>{brand.name}</option>  
+                  )}
+                </select>
+                <label htmlFor="car-model">Car model</label>
+                <select onChange={this.handleModelChange}
+                  value={this.state.brands.selected === "all" ? "all" : this.state.models.selected}
+                  className="form-control"
+                  name="car-model"
+                  id="car-model"
+                  disabled={this.state.brands.selected === "all" ? true : false}>
+                  <option value="all">All from selected brand</option>
+                  {this.state.models.list.map(model =>
+                    <option key={model.id} value={model.id}>{model.name}</option>
+                  )}
+                </select>
               </fieldset>
               <fieldset className="pick-up">
                 <legend>Pick-up information</legend>
                 <div className="row">
                   <div className="col-md-6">
                     <label htmlFor="pick-up-date">Pick-up date</label>
-                    <input className="form-control" id="pick-up-date" />
+                    <input className="form-control" id="pick-up-date" placeholder="24.12.2018" />
                   </div>
                   <div className="col-md-6">
                     <label htmlFor="pick-up-time">Pick-up time</label>
-                    <input className="form-control" id="pick-up-time" />
+                    <input className="form-control" id="pick-up-time" placeholder="12:00" />
                   </div>
                 </div>
                 <label htmlFor="pick-up-location">Pick-up location</label>
@@ -204,8 +194,8 @@ export default class SearchForm extends React.Component {
                       <option value={place.id} key={place.id}>{place.name}</option>
                     )
                   ) : (
-                    <option value="null">Loading ...</option>
-                  )}
+                      <option value="null">Loading locations ...</option>
+                    )}
                   {}
                 </select>
               </fieldset>
@@ -214,11 +204,11 @@ export default class SearchForm extends React.Component {
                 <div className="row">
                   <div className="col-md-6">
                     <label htmlFor="drop-off-date">Drop-off date</label>
-                    <input className="form-control" id="drop-off-date" />
+                    <input className="form-control" id="drop-off-date" placeholder="31.12.2018" />
                   </div>
                   <div className="col-md-6">
                     <label htmlFor="drop-off-time">Drop-off time</label>
-                    <input className="form-control" id="drop-off-time" />
+                    <input className="form-control" id="drop-off-time" placeholder="18:00" />
                   </div>
                 </div>
                 <label htmlFor="drop-off-location">Drop-off location</label>
@@ -232,8 +222,8 @@ export default class SearchForm extends React.Component {
                       <option value={place.id} key={place.id}>{place.name}</option>
                     )
                   ) : (
-                    <option value="null">Loading ...</option>
-                  )}
+                      <option value="null">Loading locations ...</option>
+                    )}
                   {}
                 </select>
               </fieldset>

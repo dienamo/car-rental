@@ -18,16 +18,17 @@ export async function fetch_classes() {
 export async function fetch_class_brands(classes) {
   let brands = [];
   const cars_ref = db.collection("cars");
-  classes.forEach(async (class_id) => {
+  for (let class_id of classes) {
     const class_ref = db.collection("car-classes").doc(class_id);
     let carSnapshot = await cars_ref.where("class", "==", class_ref).get();
     for (let car of carSnapshot.docs) {
       let brand_ref = car.get('brand');
       let brandSnapshot = await db.collection("car-brands").doc(brand_ref.id).get();
       brands.push(
-        { id: brandSnapshot.id, name: brandSnapshot.get('name') });
+        { id: brandSnapshot.id, name: brandSnapshot.get('name') }
+      );
     }
-  });
+  }
   return brands;
 }
 
@@ -39,6 +40,21 @@ export async function fetch_brand_models(brand_id) {
     models.push({ id: doc.id, name: doc.get('name') });
   });
   return models;
+}
+
+export async function fetch_car(car_id) {
+  const carSnapshot = await db.collection('cars').doc(car_id).get();
+  if (carSnapshot.exists) {
+    let data = carSnapshot.data();
+    const brandSnapshot = await data.brand.get();
+    data.brand = brandSnapshot.data();
+    const modelSnapshot = await data.model.get();
+    data.model = modelSnapshot.data();
+    const classSnapshot = await data.class.get();
+    data.class = classSnapshot.data();
+    return data;
+  }
+  return null;
 }
 
 export async function fetch_places() {
@@ -91,7 +107,7 @@ export async function get_all_cars_admin() {
 
     const carBrand = await carData.brand.get();
     const carModel = await carData.model.get();
-    
+
     listingData.push([carDoc.id, `${carBrand.data().name} ${carModel.data().name}`, carData.license_plate, (carData.availability === true ? 'Available' : 'Not available'), carData.engine, carData.price]);
   }
 
@@ -105,7 +121,7 @@ export async function quick_search_cars_admin(expression) {
 
   // Find cars by brand names
   const brandNames = await db.collection('car-brands').where('name', '==', expression).get();
-  
+
   for (const brandNameDoc of brandNames.docs) {
 
     const cars = await db.collection('cars').where('brand', '==', brandNameDoc.ref).get();

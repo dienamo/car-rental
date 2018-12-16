@@ -21,6 +21,7 @@ import Homepage from './Homepage';
 import About from './About';
 import Contact from './Contact';
 import Results from './Results';
+import CarPage from './CarPage';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -30,10 +31,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { openNav: false };
-    // Initialize Firebase
-    /*const firebase_config = require('../firebase_config');
-    firebase.initializeApp(firebase_config);*/
-
     faLibrary.add(faPlusCircle);
     faLibrary.add(faCarSide);
     faLibrary.add(faSpinner);
@@ -85,6 +82,7 @@ class App extends React.Component {
               <Route exact path="/contact" component={Contact} />
               <Route path='/administration' render={AdministrationPage} />
               <Route exact path="/results" component={Results} />
+              <Route exact path="/car/:carId" component={CarPage} />
             </Switch>
           </div>
           <footer className="app-footer">

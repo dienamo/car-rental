@@ -2,7 +2,7 @@ $newCarFormFooterHeight: 64px;
 
 .administration {
 
-    /* Main administration panel */
+    /* Main administration panel a vseobecne styly v ramci celeho adminpanelu */
     .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
         border-color: #637383 #dee2e6 #fff;
         border-top-width: 2px;
@@ -42,7 +42,7 @@ $newCarFormFooterHeight: 64px;
         }
     }
 
-    /* Add new car panel */
+    /* Add new car panel + order details panel */
     .carDetailsFormAdmin, .orderDetailsAdmin {
         .add-new-car-form, .order-details {
             top: 50%;
@@ -114,8 +114,6 @@ $newCarFormFooterHeight: 64px;
         }
     }
 
-    /* Orders listing */
-
     /* Main administration panel - responsive */
     @media only screen and (max-width: 767px) {
         .small-screen-action-buttons {
@@ -158,8 +156,8 @@ $newCarFormFooterHeight: 64px;
 
     /* Add new car panel - responsive */
     @media only screen and (max-height: 449px) {
-        .carListingAdmin {
-            .add-new-car-form {
+        .carDetailsFormAdmin, .orderDetailsAdmin {
+            .add-new-car-form, .order-details {
                 height: 100%;
 
                 header {
@@ -170,8 +168,8 @@ $newCarFormFooterHeight: 64px;
     }
 
     @media only screen and (max-width: 767px) {
-        .carDetailsFormAdmin {
-            .add-new-car-form {
+        .carDetailsFormAdmin, .orderDetailsAdmin {
+            .add-new-car-form, .order-details {
                 .small-screen-label {
                     display: inline-block;
                 }
@@ -197,12 +195,12 @@ $newCarFormFooterHeight: 64px;
 
     @media only screen and (min-width: 871px) and (max-width: 1199px) {
         .carDetailsFormAdmin, .orderDetailsAdmin {
-            .add-new-car-form {
+            .add-new-car-form, .order-details {
                 header h3 {
                     font-size: 1.6rem;
                 }
 
-                legend {
+                legend, h4 {
                     font-size: 1.4rem;
                 }
             }
@@ -216,7 +214,7 @@ $newCarFormFooterHeight: 64px;
                     font-size: 1.5rem;
                 }
 
-                legend {
+                legend, h4 {
                     font-size: 1.3rem;
                 }
             }
@@ -230,14 +228,16 @@ $newCarFormFooterHeight: 64px;
                     font-size: 1.35rem;
                 }
 
-                legend {
+                legend, h4 {
                     font-size: 1.25rem;
                 }
 
                 label {
                     font-size: 15px;
                 }
+            }
 
+            .add-new-car-form {
                 .close-button {
                     display: none;
                 }
@@ -246,7 +246,7 @@ $newCarFormFooterHeight: 64px;
     }
 
     @media only screen and (min-width: 768px) and (max-width: 870px) {
-        .carDetailsFormAdmin {
+        .carDetailsFormAdmin, .orderDetailsAdmin {
             label {
                 font-size: 15px;
             }
