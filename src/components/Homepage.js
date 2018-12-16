@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchForm from './SearchForm';
-import TopCars from './TopCars';
+import CarsBar from './CarsBar';
 import {
   Row, Col,
 } from 'reactstrap';
@@ -10,9 +10,12 @@ export default class Homepage extends React.Component {
     super(props);
     this.state = {};
   }
+  componentDidMount() {
+    document.title = "Car Rental";
+  }
   render() {
     return (
-      <div className="homepage">
+      <main className="homepage">
         <Row>
           <Col xs={{ size: 12, order: 2 }} md={{ size: 6, order: 1 }}>
             <div className="left">
@@ -23,16 +26,19 @@ export default class Homepage extends React.Component {
             <div className="right">
               <h1 className="page-heading">Welcome!</h1>
               <h2>Here you can search and rent car of your dreams!</h2>
-              <img src="./img/stock.jpg" alt="stock" />
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lobortis varius nisi nec sagittis. Integer rhoncus arcu ante, vel scelerisque augue dapibus eu. Praesent sed sapien id erat porttitor gravida non sit amet augue. Curabitur luctus porttitor ante, vel aliquet dolor commodo nec. Praesent at enim eu quam consequat aliquam.</p>
+              <img src="./img/stock.jpg" alt="stock" className="d-none d-md-block" />
+              <p>
+                In search form you can select your preferred car class, brand and model.
+                Fill in where and when you want to pick-up and drop-off rented car.
+              </p>
             </div>
           </Col>
         </Row>
-        <TopCars carClass="Economic" />
-        <TopCars carClass="Middle" />
-        <TopCars carClass="Luxury" />
-        <TopCars carClass="SUV" />
-      </div>
+        <CarsBar title="Top ordered cars" />
+        <CarsBar title="In discount" />
+        <CarsBar title="Best for trips" />
+
+      </main>
     )
   }
 }

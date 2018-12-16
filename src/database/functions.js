@@ -18,16 +18,17 @@ export async function fetch_classes() {
 export async function fetch_class_brands(classes) {
   let brands = [];
   const cars_ref = db.collection("cars");
-  classes.forEach(async (class_id) => {
+  for (let class_id of classes) {
     const class_ref = db.collection("car-classes").doc(class_id);
     let carSnapshot = await cars_ref.where("class", "==", class_ref).get();
     for (let car of carSnapshot.docs) {
       let brand_ref = car.get('brand');
       let brandSnapshot = await db.collection("car-brands").doc(brand_ref.id).get();
       brands.push(
-        { id: brandSnapshot.id, name: brandSnapshot.get('name') });
+        { id: brandSnapshot.id, name: brandSnapshot.get('name') }
+      );
     }
-  });
+  }
   return brands;
 }
 
@@ -39,6 +40,21 @@ export async function fetch_brand_models(brand_id) {
     models.push({ id: doc.id, name: doc.get('name') });
   });
   return models;
+}
+
+export async function fetch_car(car_id) {
+  const carSnapshot = await db.collection('cars').doc(car_id).get();
+  if (carSnapshot.exists) {
+    let data = carSnapshot.data();
+    const brandSnapshot = await data.brand.get();
+    data.brand = brandSnapshot.data();
+    const modelSnapshot = await data.model.get();
+    data.model = modelSnapshot.data();
+    const classSnapshot = await data.class.get();
+    data.class = classSnapshot.data();
+    return data;
+  }
+  return null;
 }
 
 export async function fetch_places() {
@@ -91,7 +107,7 @@ export async function get_all_cars_admin() {
 
     const carBrand = await carData.brand.get();
     const carModel = await carData.model.get();
-    
+
     listingData.push([carDoc.id, `${carBrand.data().name} ${carModel.data().name}`, carData.license_plate, (carData.availability === true ? 'Available' : 'Not available'), carData.engine, carData.price]);
   }
 
@@ -105,7 +121,7 @@ export async function quick_search_cars_admin(expression) {
 
   // Find cars by brand names
   const brandNames = await db.collection('car-brands').where('name', '==', expression).get();
-  
+
   for (const brandNameDoc of brandNames.docs) {
 
     const cars = await db.collection('cars').where('brand', '==', brandNameDoc.ref).get();
@@ -149,6 +165,191 @@ export async function quick_search_cars_admin(expression) {
 
   // Find cars by engine
   /*const carsByEngine = await db.collection('cars').where('engine', '==', expression).get();*/
-  //console.log(listingData);
   return listingData;
+}
+
+export async function save_car_data_admin(formData, carId = null) {
+
+  let brandRef = null;
+  let classRef = null;
+  let modelRef = null;
+
+  for (const index in formData) {
+    if (typeof formData[index] === 'string') {
+      formData[index] = formData[index].trim();
+    }
+  }
+
+  const brandsByName = await db.collection('car-brands').where('name', '==', formData.brand).get();
+  if (brandsByName.docs.length > 0) {
+    brandRef = brandsByName.docs[0].ref;
+  } else {
+    let slugFormBrand = formData.brand.toLowerCase().trim().replace(/ /g, "-");
+
+    brandRef = await db.collection('car-brands').doc(slugFormBrand);
+
+    await brandRef.set({
+      name: formData.brand
+    });
+  }
+
+  classRef = await db.collection('car-classes').doc(formData.class);
+
+  const modelsByName = await db.collection('car-models').where('name', '==', formData.model).get();
+  if (modelsByName.docs.length > 0) {
+    modelRef = modelsByName.docs[0].ref;
+  } else {
+
+    let slugFormModel = formData.model.toLowerCase().trim().replace(/ /g, "-");
+
+    modelRef = await db.collection('car-models').doc(slugFormModel);
+
+    await modelRef.set({
+      brand_id: brandRef,
+      name: formData.model
+    });
+  }
+
+  let result = null;
+
+  if (carId !== null) {
+
+    // update
+
+    const carRef = await db.collection('cars').doc(carId);
+
+    result = await carRef.update({
+      availability: formData.availability,
+      brand: brandRef,
+      class: classRef,
+      engine: formData.engine,
+      fuel: formData.fuel,
+      license_plate: formData.license_plate,
+      model: modelRef,
+      price: Number(formData.price),
+      seats: Number(formData.seats),
+      transmission: formData.transmission 
+    });
+
+  } else {
+
+    // create
+
+    result = await db.collection('cars').add({
+      availability: (formData.availability === 'true' ? true : false),
+      brand: brandRef,
+      class: classRef,
+      engine: formData.engine,
+      fuel: formData.fuel,
+      license_plate: formData.license_plate,
+      model: modelRef,
+      price: Number(formData.price),
+      seats: Number(formData.seats),
+      transmission: formData.transmission
+    });
+  }
+
+  return result;
+
+}
+
+export async function get_car_data_admin(carId) {
+  const carDoc = await db.collection('cars').doc(carId).get();
+  const carDataFetched = carDoc.data();
+
+  const carBrand = await carDataFetched.brand.get();
+  const carBrandName = carBrand.data().name;
+
+  const carModel = await carDataFetched.model.get();
+  const carModelName = carModel.data().name;
+
+  const carClass = await carDataFetched.class.get();
+  
+  const carData = {
+    availability: carDataFetched.availability,
+    brand: carBrandName,
+    class: carClass.id,
+    engine: carDataFetched.engine,
+    fuel: carDataFetched.fuel,
+    license_plate: carDataFetched.license_plate,
+    model: carModelName,
+    price: carDataFetched.price,
+    seats: carDataFetched.seats,
+    transmission: carDataFetched.transmission
+  }
+
+  return carData;
+}
+
+export async function get_all_orders_admin() {
+
+  const allOrders = await db.collection('orders').get();
+  let listingData = [];
+
+  for (const orderDoc of allOrders.docs) {
+    const orderData = orderDoc.data();
+
+    // Get car data
+    const originalCar = await orderData.original_car.get();
+
+    listingData.push({
+      id: orderDoc.id,
+      customer: {
+        first_name: orderData.customer.first_name,
+        last_name: orderData.customer.last_name
+      },
+      car: {
+        id: originalCar.id,
+        brand: orderData.car.brand,
+        model: orderData.car.model,
+        license_plate: orderData.car.license_plate,
+        price: orderData.car.price
+      }
+    });
+  }
+
+  return listingData;
+}
+
+export async function get_order_data_admin(orderId) {
+  const orderDoc = await db.collection('orders').doc(orderId).get();
+  const orderDataFetched = orderDoc.data();
+
+  const orderDropoffPlace = await orderDataFetched.dropoff_place.get();
+  const orderDropoffPlaceData = orderDropoffPlace.data();
+  const orderDropoffDate = new Date(orderDataFetched.dropoff_datetime.seconds * 1000);
+
+  const orderPickupPlace = await orderDataFetched.pickup_place.get();
+  const orderPickupPlaceData = orderPickupPlace.data();
+  const orderPickupDate = new Date(orderDataFetched.pickup_datetime.seconds * 1000);
+
+  const orderData = {
+    state: orderDataFetched.state,
+    customer: {
+      first_name: orderDataFetched.customer.first_name,
+      last_name: orderDataFetched.customer.last_name,
+      email: orderDataFetched.customer.email,
+      phone: orderDataFetched.customer.phone,
+    },
+    car: {
+      brand: orderDataFetched.car.brand,
+      model: orderDataFetched.car.model,
+      license_plate: orderDataFetched.car.license_plate,
+      price: orderDataFetched.car.price
+    },
+    pickup_details: {
+      place_name: orderPickupPlaceData.name,
+      place_address: orderPickupPlaceData.address,
+      place_gps: `${orderPickupPlaceData.gps.latitude}° N, ${orderPickupPlaceData.gps.longitude}° E`,
+      datetime: `${orderPickupDate.getDate()}. ${orderPickupDate.getMonth() + 1}. ${orderPickupDate.getFullYear()}`
+    },
+    dropoff_details: {
+      place_name: orderDropoffPlaceData.name,
+      place_address: orderDropoffPlaceData.address,
+      place_gps: `${orderDropoffPlaceData.gps.latitude}° N, ${orderDropoffPlaceData.gps.longitude}° E`,
+      datetime: `${orderDropoffDate.getDate()}. ${orderDropoffDate.getMonth() + 1}. ${orderDropoffDate.getFullYear()}`
+    }
+  }
+
+  return orderData;
 }

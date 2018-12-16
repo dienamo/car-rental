@@ -2,6 +2,7 @@ import React from 'react';
 import SearchForm from './SearchForm';
 import CarThumb from './CarThumb';
 import * as db from '../database/functions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class Results extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ export default class Results extends React.Component {
     this.search = this.search.bind(this);
   }
   componentDidMount() {
+    document.title = "Search results";
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
     this.search(this.props.location.state.data);
@@ -45,9 +47,7 @@ export default class Results extends React.Component {
     if (this.state.showFilter || this.state.width > 767) {
       return (
         <div className="col-xs-12 col-md-4">
-          <aside>
-            <SearchForm title="Edit Search" onFormSubmit={this.search} />
-          </aside>
+          <SearchForm title="Edit Search" onFormSubmit={this.search} />
         </div>
       )
     }
@@ -60,7 +60,7 @@ export default class Results extends React.Component {
         <div className="row">
           {this.state.cars.map(car =>
             <div className="col-sm-6 col-lg-4 px-2 grid-item" key={car.id}>
-              <CarThumb name={car.brand.name + ' ' + car.model.name} price={car.price} />
+              <CarThumb carData={car} />
             </div>
           )}
         </div>
@@ -75,6 +75,7 @@ export default class Results extends React.Component {
   }
 
   render() {
+    console.log('state:', this.state);
     return (
       <div className="results">
         <div className="page-heading-wrap">
@@ -84,14 +85,18 @@ export default class Results extends React.Component {
             Edit Search
           </button>
         </div>
-        <div className="row">
-          {this.filter()}
-          <div className="col-xs-12 col-md-8">
-            <main>
-              {this.state.renderList ? this.results() : <p>Loading ...</p>}
-            </main>
+        <main>
+          <div className="row">
+            {this.filter()}
+            <div className="col-xs-12 col-md-8">
+              {this.state.renderList ? this.results() : (
+                <div className="mt-2 mr-3">
+                  <FontAwesomeIcon style={{ 'verticalAlign': 'bottom' }} className="spinner-icon mr-2" icon="spinner" size="lg" pulse /><span style={{ 'verticalAlign': 'top' }}>Loading...</span>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        </main>
       </div>
     )
   }

@@ -5,8 +5,6 @@ import {
 } from 'reactstrap';
 import { Switch, Route, NavLink as RouterNavlink } from 'react-router-dom';
 
-//import { attachFirebaseToComponent } from '../helpers/helperFunctions.js';
-
 import CarListing from './CarListingAdmin';
 import Orders from './OrdersAdmin';
 
@@ -19,7 +17,6 @@ class Administration extends React.Component {
   render() {
 
     const props = this.props;
-    //const CarListingPage = attachFirebaseToComponent(CarListing, this.props.firebase);
 
     return (
       <div className="administration">

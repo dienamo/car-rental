@@ -8,10 +8,14 @@ export default class SearchForm extends React.Component {
     this.state = {
       render: false,
       redirect: false,
-      classes: [],
-      brands: {},
-      models: { selected: "all", list: [] },
-      places: {}
+      classes: [
+        { name: "Economic", selected: true, id: "economic" },
+        { name: "Middle", selected: true, id: "middle" },
+        { name: "Luxury", selected: false, id: "luxury" },
+      ],
+      brands: { fetched: false, selected: "all", list: [] },
+      models: { fetched: false, selected: "all", list: [] },
+      places: { fetched: false }
     };
 
     this.submitForm = this.submitForm.bind(this);
@@ -24,18 +28,18 @@ export default class SearchForm extends React.Component {
 
   async componentDidMount() {
     const places = await db.fetch_places();
-    const classes = await db.fetch_classes();
-    const brands = await db.fetch_class_brands(["middle"]);
+    const brands = await db.fetch_class_brands(["middle", "luxury", "economic"]);
     this.setState({
-      classes: [...classes],
       places: {
         pick_up: places[0].id,
         drop_off: places[0].id,
-        list: places
+        list: places,
+        fetched: true
       },
       brands: {
         selected: "all",
-        list: brands
+        list: brands,
+        fetched: true
       },
       render: true
     });
@@ -46,8 +50,8 @@ export default class SearchForm extends React.Component {
     if (this.props.onFormSubmit) {
       this.props.onFormSubmit(this.process_search_data());
     } else {
-    this.setState({ redirect: true });
-  }
+      this.setState({ redirect: true });
+    }
   }
 
   handleClassChange(e) {
@@ -118,116 +122,114 @@ export default class SearchForm extends React.Component {
           }} />
         )}
         <div className="search-form">
-          {this.state.render ? (
-            <React.Fragment>
-              <h3>{this.props.title}</h3>
-              <form onSubmit={this.submitForm}>
-                <fieldset className="car-classes">
-                  <legend>Car classes</legend>
-                  {this.state.classes.map(carClass =>
-                    <label className={carClass.selected ? 'class-check class-checked' : 'class-check'}
-                      htmlFor={"class-" + carClass.id}
-                      key={carClass.id}>
-                      <img
-                        className={carClass.selected ? 'check-icon check-icon-checked' : 'check-icon'}
-                        alt="checked"
-                        src="./img/ok.png" />
-                      <input
-                        type="checkbox" id={"class-" + carClass.id}
-                        name={carClass.id}
-                        onChange={this.handleClassChange}
-                        checked={carClass.selected} />
-                      {carClass.name}
-                    </label>
+          <React.Fragment>
+            <h3>{this.props.title}</h3>
+            <form onSubmit={this.submitForm}>
+              <fieldset className="car-classes">
+                <legend>Car classes</legend>
+                {this.state.classes.map(carClass =>
+                  <label className={carClass.selected ? 'class-check class-checked' : 'class-check'}
+                    htmlFor={"class-" + carClass.id}
+                    key={carClass.id}>
+                    <img
+                      className={carClass.selected ? 'check-icon check-icon-checked' : 'check-icon'}
+                      alt="checked"
+                      src="./img/ok.png" />
+                    <input
+                      type="checkbox" id={"class-" + carClass.id}
+                      name={carClass.id}
+                      onChange={this.handleClassChange}
+                      checked={carClass.selected} />
+                    {carClass.name}
+                  </label>
+                )}
+              </fieldset>
+              <fieldset className="preferred-brand">
+                <legend>Preferred brand &amp; model</legend>
+                <label htmlFor="car-brand">Car brand</label>
+                <select onChange={this.handleBrandChange}
+                  value={this.state.brands.selected}
+                  className="form-control"
+                  name="car-brand"
+                  id="car-brand"
+                  disabled={this.state.brands.fetched ? false : true}>
+                  <option value="all">{this.state.brands.fetched ? "All brands" : "Loading brands ..."}</option>
+                  {this.state.brands.fetched && this.state.brands.list.map(brand =>
+                    <option value={brand.id} key={brand.id}>{brand.name}</option>  
                   )}
-                </fieldset>
-                <fieldset className="preferred-brand">
-                  <legend>Preferred car brand</legend>
-                  <div className="row form-group">
-                    <div className="col-md-4">
-                      <label htmlFor="car-brand">Car brand</label>
-                    </div>
-                    <div className="col-md-8">
-                      <select onChange={this.handleBrandChange}
-                        value={this.state.brands.selected}
-                        className="form-control"
-                        name="car-brand"
-                        id="car-brand">
-                        <option value="all">All brands</option>
-                        <option value="skoda">Skoda</option>
-                        <option value="bmw">BMW</option>
-                      </select>
-                    </div>
+                </select>
+                <label htmlFor="car-model">Car model</label>
+                <select onChange={this.handleModelChange}
+                  value={this.state.brands.selected === "all" ? "all" : this.state.models.selected}
+                  className="form-control"
+                  name="car-model"
+                  id="car-model"
+                  disabled={this.state.brands.selected === "all" ? true : false}>
+                  <option value="all">All from selected brand</option>
+                  {this.state.models.list.map(model =>
+                    <option key={model.id} value={model.id}>{model.name}</option>
+                  )}
+                </select>
+              </fieldset>
+              <fieldset className="pick-up">
+                <legend>Pick-up information</legend>
+                <div className="row">
+                  <div className="col-md-6">
+                    <label htmlFor="pick-up-date">Pick-up date</label>
+                    <input className="form-control" id="pick-up-date" placeholder="24.12.2018" />
                   </div>
-                  <div className="row form-group">
-                    <div className="col-md-4">
-                      <label htmlFor="car-model">Car model</label>
-                    </div>
-                    <div className="col-md-8">
-                      <select onChange={this.handleModelChange}
-                        value={this.state.brands.selected === "all" ? "all" : this.state.models.selected}
-                        className="form-control"
-                        name="car-model"
-                        id="car-model"
-                        disabled={this.state.brands.selected === "all" ? true : false}>
-                        <option value="all">All from selected brand</option>
-                        {this.state.models.list.map(model =>
-                          <option key={model.id} value={model.id}>{model.name}</option>
-                        )}
-                      </select>
-                    </div>
+                  <div className="col-md-6">
+                    <label htmlFor="pick-up-time">Pick-up time</label>
+                    <input className="form-control" id="pick-up-time" placeholder="12:00" />
                   </div>
-                </fieldset>
-                <fieldset className="pick-up">
-                  <legend>Pick-up information</legend>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label htmlFor="pick-up-date">Pick-up date</label>
-                      <input className="form-control" id="pick-up-date" />
-                    </div>
-                    <div className="col-md-6">
-                      <label htmlFor="pick-up-time">Pick-up time</label>
-                      <input className="form-control" id="pick-up-time" />
-                    </div>
-                  </div>
-                  <label htmlFor="pick-up-location">Pick-up location</label>
-                  <select className="form-control"
-                    id="pick-up-location"
-                    onChange={this.handlePickUpPlace}
-                    value={this.state.places.pick_up}>
-                    {this.state.places.list.map(place =>
+                </div>
+                <label htmlFor="pick-up-location">Pick-up location</label>
+                <select className="form-control"
+                  disabled={this.state.places.fetched ? false : true}
+                  id="pick-up-location"
+                  onChange={this.handlePickUpPlace}
+                  value={this.state.places.pick_up}>
+                  {this.state.places.fetched ? (
+                    this.state.places.list.map(place =>
                       <option value={place.id} key={place.id}>{place.name}</option>
+                    )
+                  ) : (
+                      <option value="null">Loading locations ...</option>
                     )}
-                  </select>
-                </fieldset>
-                <fieldset className="drop-off">
-                  <legend>Drop-off information</legend>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label htmlFor="drop-off-date">Drop-off date</label>
-                      <input className="form-control" id="drop-off-date" />
-                    </div>
-                    <div className="col-md-6">
-                      <label htmlFor="drop-off-time">Drop-off time</label>
-                      <input className="form-control" id="drop-off-time" />
-                    </div>
+                  {}
+                </select>
+              </fieldset>
+              <fieldset className="drop-off">
+                <legend>Drop-off information</legend>
+                <div className="row">
+                  <div className="col-md-6">
+                    <label htmlFor="drop-off-date">Drop-off date</label>
+                    <input className="form-control" id="drop-off-date" placeholder="31.12.2018" />
                   </div>
-                  <label htmlFor="drop-off-location">Drop-off location</label>
-                  <select className="form-control"
-                    id="drop-off-location"
-                    onChange={this.handleDropOffPlace}
-                    value={this.state.places.drop_off}>
-                    {this.state.places.list.map(place =>
+                  <div className="col-md-6">
+                    <label htmlFor="drop-off-time">Drop-off time</label>
+                    <input className="form-control" id="drop-off-time" placeholder="18:00" />
+                  </div>
+                </div>
+                <label htmlFor="drop-off-location">Drop-off location</label>
+                <select className="form-control"
+                  disabled={this.state.places.fetched ? false : true}
+                  id="drop-off-location"
+                  onChange={this.handleDropOffPlace}
+                  value={this.state.places.drop_off}>
+                  {this.state.places.fetched ? (
+                    this.state.places.list.map(place =>
                       <option value={place.id} key={place.id}>{place.name}</option>
+                    )
+                  ) : (
+                      <option value="null">Loading locations ...</option>
                     )}
-                  </select>
-                </fieldset>
-                <button className="btn btn-primary">Search</button>
-              </form>
-            </React.Fragment>
-          ) : (
-              <p>Wait for it ...</p>
-            )}
+                  {}
+                </select>
+              </fieldset>
+              <button className="btn btn-primary">Search</button>
+            </form>
+          </React.Fragment>
         </div>
       </React.Fragment>
     )
