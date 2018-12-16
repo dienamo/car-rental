@@ -2,7 +2,6 @@ import React from 'react';
 import SearchForm from './SearchForm';
 import CarThumb from './CarThumb';
 import * as db from '../database/functions';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class Results extends React.Component {
@@ -61,9 +60,9 @@ export default class Results extends React.Component {
         <div className="row">
           {this.state.cars.map(car =>
             <div className="col-sm-6 col-lg-4 px-2 grid-item" key={car.id}>
-              <Link to={`/car/${car.id}`}>
-                <CarThumb name={car.brand.name + ' ' + car.model.name} price={car.price} />
-              </Link>
+              {/* <Link to={`/car/${car.id}`}> */}
+                <CarThumb carData={car} />
+              {/* </Link> */}
             </div>
           )}
         </div>
