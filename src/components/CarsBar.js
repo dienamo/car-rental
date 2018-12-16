@@ -21,16 +21,16 @@ export default class CarBar extends React.Component {
       <section className="cars-bar">
         <h3>{this.props.title}</h3>
         <Row>
-          <Col sm={12} lg={3}>
+          <Col xs={12} sm={6} lg={3}>
             <CarThumb carData={carData} />
           </Col>
-          <Col sm={12} lg={3}>
+          <Col xs={12} sm={6} lg={3}>
             <CarThumb carData={carData} />
           </Col>
-          <Col sm={12} lg={3}>
+          <Col xs={12} sm={6} lg={3}>
             <CarThumb carData={carData} />
           </Col>
-          <Col sm={12} lg={3}>
+          <Col xs={12} sm={6} lg={3}>
             <CarThumb carData={carData} />
           </Col>
         </Row>
