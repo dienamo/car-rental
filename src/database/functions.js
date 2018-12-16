@@ -296,5 +296,44 @@ export async function get_all_orders_admin() {
 }
 
 export async function get_order_data_admin(orderId) {
+  const orderDoc = await db.collection('orders').doc(orderId).get();
+  const orderDataFetched = orderDoc.data();
 
+  const orderDropoffPlace = await orderDataFetched.dropoff_place.get();
+  const orderDropoffPlaceData = orderDropoffPlace.data();
+  const orderDropoffDate = new Date(orderDataFetched.dropoff_datetime.seconds * 1000);
+
+  const orderPickupPlace = await orderDataFetched.pickup_place.get();
+  const orderPickupPlaceData = orderPickupPlace.data();
+  const orderPickupDate = new Date(orderDataFetched.pickup_datetime.seconds * 1000);
+
+  const orderData = {
+    state: orderDataFetched.state,
+    customer: {
+      first_name: orderDataFetched.customer.first_name,
+      last_name: orderDataFetched.customer.last_name,
+      email: orderDataFetched.customer.email,
+      phone: orderDataFetched.customer.phone,
+    },
+    car: {
+      brand: orderDataFetched.car.brand,
+      model: orderDataFetched.car.model,
+      license_plate: orderDataFetched.car.license_plate,
+      price: orderDataFetched.car.price
+    },
+    pickup_details: {
+      place_name: orderPickupPlaceData.name,
+      place_address: orderPickupPlaceData.address,
+      place_gps: `${orderPickupPlaceData.gps.latitude}° N, ${orderPickupPlaceData.gps.longitude}° E`,
+      datetime: `${orderPickupDate.getDate()}. ${orderPickupDate.getMonth() + 1}. ${orderPickupDate.getFullYear()}`
+    },
+    dropoff_details: {
+      place_name: orderDropoffPlaceData.name,
+      place_address: orderDropoffPlaceData.address,
+      place_gps: `${orderDropoffPlaceData.gps.latitude}° N, ${orderDropoffPlaceData.gps.longitude}° E`,
+      datetime: `${orderDropoffDate.getDate()}. ${orderDropoffDate.getMonth() + 1}. ${orderDropoffDate.getFullYear()}`
+    }
+  }
+
+  return orderData;
 }

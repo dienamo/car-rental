@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import * as db from '../database/functions';
 import CarDetailsFormAdmin from './CarDetailsFormAdmin';
+import OrderDetailsAdmin from './OrderDetailsAdmin';
 
 export default class OrdersAdmin extends React.Component {
     constructor(props) {
@@ -16,7 +17,10 @@ export default class OrdersAdmin extends React.Component {
 
         this.state = {
             listingData: null,
-            showEditCarForm: false
+            showEditCarForm: false,
+            editedCarId: null,
+            showOrderDetails: false,
+            showedOrderId: null
         };
     }
 
@@ -49,11 +53,26 @@ export default class OrdersAdmin extends React.Component {
         }
     }
 
+    handleShowOrderDetailsButtonClick(e, orderId) {
+        if (this._isMounted) {
+            this.setState({ showOrderDetails: true, showedOrderId: orderId });
+        }
+    }
+
     handleCloseCarForm(needUpdate) {
         if (this._isMounted) {
             this.setState({
                 showEditCarForm: false,
                 editedCarId: null
+            });
+        }
+    }
+
+    handleCloseOrderDetails(needUpdate) {
+        if (this._isMounted) {
+            this.setState({
+                showOrderDetails: false,
+                showedOrderId: null
             });
         }
     }
@@ -71,11 +90,11 @@ export default class OrdersAdmin extends React.Component {
                         <td className="hide-listing-column">{`${orderData.customer.first_name} ${orderData.customer.last_name}`}</td>
                         <td className="action-buttons-column text-nowrap">
                             <div className="big-screen-action-buttons">
-                                <Button className="listing-action-button-big-screen" color="info" size="sm"><FontAwesomeIcon icon="list-alt" />&nbsp;Details</Button>
+                                <Button onClick={e => this.handleShowOrderDetailsButtonClick(e, orderData.id)} className="listing-action-button-big-screen" color="info" size="sm"><FontAwesomeIcon icon="list-alt" />&nbsp;Details</Button>
                                 <Button onClick={e => this.handleEditCarButtonClick(e, orderData.car.id)} className="listing-action-button-big-screen" size="sm"><FontAwesomeIcon icon="car-side" />&nbsp;Car details</Button>
                             </div>
                             <div className="small-screen-action-buttons">
-                                <Button className="listing-action-button-small-screen" color="info" size="sm"><FontAwesomeIcon icon="list-alt" /></Button>
+                                <Button onClick={e => this.handleShowOrderDetailsButtonClick(e, orderData.id)} className="listing-action-button-small-screen" color="info" size="sm"><FontAwesomeIcon icon="list-alt" /></Button>
                                 <Button onClick={e => this.handleEditCarButtonClick(e, orderData.car.id)} className="listing-action-button-small-screen"  size="sm"><FontAwesomeIcon icon="car-side" /></Button>
                             </div>
                         </td>
@@ -119,6 +138,9 @@ export default class OrdersAdmin extends React.Component {
                 </Row>
                 {this.state.showEditCarForm === true && 
                     <CarDetailsFormAdmin formType="edit" carId={this.state.editedCarId} closeHandler={this.handleCloseCarForm.bind(this)} />
+                }
+                {this.state.showOrderDetails === true && 
+                    <OrderDetailsAdmin formType="edit" orderId={this.state.showedOrderId} closeHandler={this.handleCloseOrderDetails.bind(this)} />
                 }
             </div>
         )

@@ -43,8 +43,8 @@ $newCarFormFooterHeight: 64px;
     }
 
     /* Add new car panel */
-    .carDetailsFormAdmin {
-        .add-new-car-form {
+    .carDetailsFormAdmin, .orderDetailsAdmin {
+        .add-new-car-form, .order-details {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -104,6 +104,12 @@ $newCarFormFooterHeight: 64px;
 
             .successtext-smallscreen, .failtext-smallscreen, .savingtext-smallscreen, .loadingtext-smallscreen {
                 display: none;
+            }
+        }
+
+        .order-details {
+            h4 {
+                font-weight: normal;
             }
         }
     }
@@ -190,7 +196,7 @@ $newCarFormFooterHeight: 64px;
     }
 
     @media only screen and (min-width: 871px) and (max-width: 1199px) {
-        .carDetailsFormAdmin {
+        .carDetailsFormAdmin, .orderDetailsAdmin {
             .add-new-car-form {
                 header h3 {
                     font-size: 1.6rem;
@@ -204,8 +210,8 @@ $newCarFormFooterHeight: 64px;
     }
 
     @media only screen and (min-width: 576px) and (max-width: 870px) {
-        .carDetailsFormAdmin {
-            .add-new-car-form {
+        .carDetailsFormAdmin, .orderDetailsAdmin {
+            .add-new-car-form, .order-details {
                 header h3 {
                     font-size: 1.5rem;
                 }
@@ -218,8 +224,8 @@ $newCarFormFooterHeight: 64px;
     }
 
     @media only screen and (max-width: 575px) {
-        .carDetailsFormAdmin {
-            .add-new-car-form {
+        .carDetailsFormAdmin, .orderDetailsAdmin {
+            .add-new-car-form, .order-details {
                 header h3 {
                     font-size: 1.35rem;
                 }
@@ -248,16 +254,16 @@ $newCarFormFooterHeight: 64px;
     }
 
     @media only screen and (max-width: 991px) {
-        .carDetailsFormAdmin {
-            .add-new-car-form {
+        .carDetailsFormAdmin, .orderDetailsAdmin {
+            .add-new-car-form, .order-details {
                 width: 95%;
             }
         }
     }
 
     @media only screen and (min-width: 991px) and (max-width: 1360px) {
-        .carDetailsFormAdmin {
-            .add-new-car-form {
+        .carDetailsFormAdmin, .orderDetailsAdmin {
+            .add-new-car-form, .order-details {
                 width: 80%;
             }
         }
