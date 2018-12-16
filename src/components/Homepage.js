@@ -15,7 +15,7 @@ export default class Homepage extends React.Component {
   }
   render() {
     return (
-      <div className="homepage">
+      <main className="homepage">
         <Row>
           <Col xs={{ size: 12, order: 2 }} md={{ size: 6, order: 1 }}>
             <div className="left">
@@ -35,6 +35,7 @@ export default class Homepage extends React.Component {
         <CarsBar title="In discount" />
         <CarsBar title="Best for trips" />
 
+      </main>
     )
   }
 }
