@@ -25,7 +25,6 @@ import CarPage from './CarPage';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
 class App extends React.Component {
 
   constructor(props) {
@@ -71,6 +70,9 @@ class App extends React.Component {
                 </NavItem>
                 <NavItem>
                   <NavLink tag={RouterNavlink} to="/contact">Contact</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={RouterNavlink} to="/administration">Administration</NavLink>
                 </NavItem>
               </Nav>
             </Collapse>

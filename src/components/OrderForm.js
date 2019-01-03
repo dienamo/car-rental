@@ -1,14 +1,24 @@
 import React from 'react';
 import * as db from '../database/functions';
 
+import AlertBox from './AlertBox';
+
 export default class Orderform extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      places: { fetched: false }
+      places: { fetched: false },
+      submitState: null,
+      formData: {}
     };
+
+    this._isMounted = false;
   }
+  
   async componentDidMount() {
+
+    this._isMounted = true;
+
     const places = await db.fetch_places();
     //const brands = await db.fetch_class_brands(["middle"]);
     this.setState({
@@ -21,11 +31,67 @@ export default class Orderform extends React.Component {
       render: true
     });
   }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  handleChange(e) {
+    const eventTarget = e.target;
+
+    if (this._isMounted) {
+      this.setState((currentState, props) => {
+        currentState.formData[eventTarget.name] = eventTarget.value;
+        return currentState;
+      });
+    }
+  }
+
+  saveOrder(e) {
+
+    e.preventDefault();
+
+    console.log("Sent");
+
+    if (this.state.places.fetched) {
+
+      (async () => {
+
+        if (this._isMounted) {
+          this.setState({
+            submitState: "submiting"
+          });
+        }
+
+        await db.save_order(this.state.formData);
+
+        if (this._isMounted) {
+          this.setState({
+            submitState: "success"
+          });
+        }
+
+      })().catch(err => {
+
+        if (this._isMounted) {
+          this.setState({
+            submitState: "fail"
+          });
+        }
+        console.log(err);
+      });
+
+    }
+  }
+
   render() {
     return (
       <div className="order-form">
+        {this.state.submitState === "success" &&
+          <AlertBox />
+        }
         <h3>Order this car</h3>
-        <form>
+        <form onSubmit={e => this.saveOrder(e)}>
           <fieldset className="pick-up">
             <legend>Pick-up information</legend>
             <div className="row">

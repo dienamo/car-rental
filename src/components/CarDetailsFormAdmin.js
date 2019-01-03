@@ -118,7 +118,7 @@ export default class CarDetailsFormAdmin extends React.Component {
         return (
             <div className="carDetailsFormAdmin">
                 <div onClick={() => this.handleClose()} className="dark-div"></div>
-                <form disabled onSubmit={(e) => this.saveCarData(e)}>
+                <form onSubmit={(e) => this.saveCarData(e)}>
 					<Card className="add-new-car-form rounded">
                         <CardHeader tag="header">
                             <h3 className="float-left">{this.props.formType === "edit" ? ('Edit car') : ('Add new car to database')}</h3>

@@ -3,7 +3,7 @@ import * as db from '../database/functions';
 import Orderform from './OrderForm';
 import PhotoGallery from './PhotoGallery';
 
-export default class Homepage extends React.Component {
+export default class CarPage extends React.Component {
 
   constructor(props) {
     super(props);
@@ -45,12 +45,12 @@ export default class Homepage extends React.Component {
       <div className="car-page">
         {this.state.fetched ? (
           this.state.carData ? this.renderData() : (
-            <div class="alert alert-danger" role="alert">
+            <div className="alert alert-danger" role="alert">
               Error loading car data!
             </div>
           )
         ) : (
-            <div class="alert alert-primary" role="alert">
+            <div className="alert alert-primary" role="alert">
               Loading data ...
             </div>
           )}
