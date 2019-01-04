@@ -9,7 +9,8 @@ export default class Orderform extends React.Component {
     this.state = {
       places: { fetched: false },
       submitState: null,
-      formData: {}
+      formData: {},
+      showAlertBox: false
     };
 
     this._isMounted = false;
@@ -47,11 +48,17 @@ export default class Orderform extends React.Component {
     }
   }
 
+  handleCloseAlertBox() {
+    if (this._isMounted) {
+      this.setState({
+        showAlertBox: false
+      });
+    }
+  }
+
   saveOrder(e) {
 
     e.preventDefault();
-
-    console.log("Sent");
 
     if (this.state.places.fetched) {
 
@@ -67,7 +74,8 @@ export default class Orderform extends React.Component {
 
         if (this._isMounted) {
           this.setState({
-            submitState: "success"
+            submitState: "success",
+            showAlertBox: true
           });
         }
 
@@ -75,7 +83,8 @@ export default class Orderform extends React.Component {
 
         if (this._isMounted) {
           this.setState({
-            submitState: "fail"
+            submitState: "fail",
+            showAlertBox: true
           });
         }
         console.log(err);
@@ -87,8 +96,8 @@ export default class Orderform extends React.Component {
   render() {
     return (
       <div className="order-form">
-        {this.state.submitState === "success" &&
-          <AlertBox />
+        {this.state.showAlertBox === true &&
+          <AlertBox whatHappened="success" closeHandler={this.handleCloseAlertBox.bind(this)} />
         }
         <h3>Order this car</h3>
         <form onSubmit={e => this.saveOrder(e)}>
