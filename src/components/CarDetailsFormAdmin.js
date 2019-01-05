@@ -87,7 +87,7 @@ export default class CarDetailsFormAdmin extends React.Component {
     saveCarData(e) {
         e.preventDefault();
 
-        if (this.state.carClasses !== null && !this.state.formLoading) {
+        if (this.state.carClasses !== null && !this.state.formLoading && this.state.submitState !== "submiting") {
             (async () => {
 
                 if (this._isMounted) {

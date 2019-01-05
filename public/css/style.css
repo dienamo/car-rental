@@ -11,7 +11,7 @@ html{height:100%;box-sizing:border-box}body{margin:0;padding:0;font-family:-appl
 
 .homepage .left{padding:2rem 0}.homepage .right{margin:2rem 0}.homepage .right h2{font-size:1.5rem}.homepage .right p{font-size:1.2rem;margin:1rem 0}.homepage .right img{width:90%;background:black;margin:3rem auto}
 
-.order-form{background:#eaeaea;border:1px solid #adadad;padding:1rem;border-radius:2px;box-shadow:1px 1px 7px #cacaca;overflow:auto}.order-form h3{font-size:1.5rem;margin-bottom:1.25rem}.order-form form .btn{float:right}.order-form form fieldset{margin-bottom:.5rem}.order-form form fieldset legend{font-size:1.25rem}
+.order-form{background:#eaeaea;border:1px solid #adadad;padding:1rem;border-radius:2px;box-shadow:1px 1px 7px #cacaca;overflow:auto}.order-form h3{font-size:1.5rem;margin-bottom:1.25rem}.order-form form .btn{float:right}.order-form form fieldset{margin-bottom:.5rem}.order-form form fieldset legend{font-size:1.25rem}.order-form form .react-datepicker-wrapper{width:100%}.order-form form .react-datepicker__input-container{width:100%}
 
 .photo-gallery img{width:100%}
 

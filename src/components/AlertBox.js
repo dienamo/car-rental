@@ -30,14 +30,20 @@ export default class AlertBox extends React.Component {
   render() {
     return (
       <Modal className="alertBox" isOpen={this.state.modal} style={{top: "30%"}}>
-        <ModalHeader>Order successfully created!</ModalHeader>
+        <ModalHeader>
+          {this.props.alertText.header}
+        </ModalHeader>
         <ModalBody>
           <Row>
             <Col xs="3" className="align-self-center text-center">
-              <FontAwesomeIcon icon="check-circle" className="text-success" style={{fontSize: "38px"}} />
+              {this.props.whatHappened === "success" ? (
+                <FontAwesomeIcon icon="check-circle" className="text-success" style={{fontSize: "38px"}} />
+              ) : (
+                <FontAwesomeIcon icon="times-circle" className="text-danger" style={{fontSize: "38px"}} />
+              )}
             </Col>
             <Col xs="7" style={{fontSize: '18px'}}>
-              We have sent complete order to your e-mail.
+              {this.props.alertText.body}
             </Col>
           </Row>
         </ModalBody>
