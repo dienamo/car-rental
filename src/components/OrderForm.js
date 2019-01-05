@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { registerLocale } from "react-datepicker";
 import enLocale from 'date-fns/locale/en-GB';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import * as db from '../database/functions';
 
@@ -236,8 +236,8 @@ export default class Orderform extends React.Component {
                 )}
               </span>
             </div>
-            <div className="col-9 col-sm-10 col-md-3 col-lg-4 text-right mt-1">
-              {this.state.submitState !== "submiting" &&
+            <div className="col-9 col-sm-10 col-md-3 col-lg-4 saving-state-text mt-1">
+              {this.state.submitState === "submiting" &&
                 <strong>Saving...</strong>    
               }
             </div>
