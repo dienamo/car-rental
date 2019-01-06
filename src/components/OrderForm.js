@@ -156,6 +156,7 @@ export default class Orderform extends React.Component {
                   name="pickup_datetime"
                   id="pick-up-datetime"
                   required
+                  withPortal
                 />
               </div>
             </div>
@@ -191,6 +192,7 @@ export default class Orderform extends React.Component {
                   name="dropoff_datetime"
                   id="drop-off-datetime"
                   required
+                  withPortal
                 />
               </div>
             </div>

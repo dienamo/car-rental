@@ -299,9 +299,11 @@ export async function get_all_orders_admin() {
 
     // Get car data
     const originalCar = await orderData.original_car.get();
+    const orderCreatedAt = new Date(orderData.created_at.seconds * 1000);
 
     listingData.push({
       id: orderDoc.id,
+      created_at: `${orderCreatedAt.getDate()}. ${orderCreatedAt.getMonth() + 1}. ${orderCreatedAt.getFullYear()} ${orderCreatedAt.getHours()}:${orderCreatedAt.getMinutes()}`,
       customer: {
         first_name: orderData.customer.first_name,
         last_name: orderData.customer.last_name
@@ -331,13 +333,16 @@ export async function get_order_data_admin(orderId) {
   const orderPickupPlaceData = orderPickupPlace.data();
   const orderPickupDate = new Date(orderDataFetched.pickup_datetime.seconds * 1000);
 
+  const orderCreatedAt = new Date(orderDataFetched.created_at.seconds * 1000);
+
   const orderData = {
     state: orderDataFetched.state,
+    created_at: `${orderCreatedAt.getDate()}. ${orderCreatedAt.getMonth() + 1}. ${orderCreatedAt.getFullYear()} ${orderCreatedAt.getHours()}:${orderCreatedAt.getMinutes()}`,
     customer: {
       first_name: orderDataFetched.customer.first_name,
       last_name: orderDataFetched.customer.last_name,
       email: orderDataFetched.customer.email,
-      phone: orderDataFetched.customer.phone,
+      phone_number: orderDataFetched.customer.phone_number,
     },
     car: {
       brand: orderDataFetched.car.brand,
@@ -400,7 +405,8 @@ export async function save_order(formData, carId) {
     original_car: originalCarRef,
     pickup_datetime: formData.pickup_datetime,
     pickup_place: pickupPlaceRef,
-    state: 'accepted'
+    state: 'accepted',
+    created_at: new Date()
   });
 
   return result;
