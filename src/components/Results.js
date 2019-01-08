@@ -22,7 +22,9 @@ export default class Results extends React.Component {
     document.title = "Search results";
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
-    this.search(this.props.location.state.data);
+    if (this.props.location.state) {
+      this.search(this.props.location.state.data);
+    }
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
