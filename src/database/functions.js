@@ -253,32 +253,40 @@ export async function save_car_data_admin(formData, carId = null) {
 
 }
 
-export async function get_car_data_admin(carId) {
+export async function get_car_data_admin(carId, params = null) {
   const carDoc = await db.collection('cars').doc(carId).get();
   const carDataFetched = carDoc.data();
 
-  const carBrand = await carDataFetched.brand.get();
-  const carBrandName = carBrand.data().name;
+  let carBrand = null;
+  let carModel = null;
+  let carClass = null;
 
-  const carModel = await carDataFetched.model.get();
-  const carModelName = carModel.data().name;
-
-  const carClass = await carDataFetched.class.get();
-  
-  const carData = {
+  let returnData = {
     availability: carDataFetched.availability,
-    brand: carBrandName,
-    class: carClass.id,
     engine: carDataFetched.engine,
     fuel: carDataFetched.fuel,
     license_plate: carDataFetched.license_plate,
-    model: carModelName,
     price: carDataFetched.price,
     seats: carDataFetched.seats,
     transmission: carDataFetched.transmission
   }
 
-  return carData;
+  if (params === null || params.indexOf('brand') !== -1) {
+    carBrand = await carDataFetched.brand.get();
+    returnData.brand = carBrand.data().name;
+  }
+
+  if (params === null || params.indexOf('model') !== -1) {
+    carModel = await carDataFetched.model.get();
+    returnData.model = carModel.data().name;
+  }
+
+  if (params === null || params.indexOf('class') !== -1) {
+    carClass = await carDataFetched.class.get();
+    returnData.class = carClass.id;
+  }
+
+  return returnData;
 }
 
 export async function get_all_orders_admin() {
@@ -291,9 +299,11 @@ export async function get_all_orders_admin() {
 
     // Get car data
     const originalCar = await orderData.original_car.get();
+    const orderCreatedAt = new Date(orderData.created_at.seconds * 1000);
 
     listingData.push({
       id: orderDoc.id,
+      created_at: `${orderCreatedAt.getDate()}. ${orderCreatedAt.getMonth() + 1}. ${orderCreatedAt.getFullYear()} ${orderCreatedAt.getHours()}:${orderCreatedAt.getMinutes()}`,
       customer: {
         first_name: orderData.customer.first_name,
         last_name: orderData.customer.last_name
@@ -323,13 +333,16 @@ export async function get_order_data_admin(orderId) {
   const orderPickupPlaceData = orderPickupPlace.data();
   const orderPickupDate = new Date(orderDataFetched.pickup_datetime.seconds * 1000);
 
+  const orderCreatedAt = new Date(orderDataFetched.created_at.seconds * 1000);
+
   const orderData = {
     state: orderDataFetched.state,
+    created_at: `${orderCreatedAt.getDate()}. ${orderCreatedAt.getMonth() + 1}. ${orderCreatedAt.getFullYear()} ${orderCreatedAt.getHours()}:${orderCreatedAt.getMinutes()}`,
     customer: {
       first_name: orderDataFetched.customer.first_name,
       last_name: orderDataFetched.customer.last_name,
       email: orderDataFetched.customer.email,
-      phone: orderDataFetched.customer.phone,
+      phone_number: orderDataFetched.customer.phone_number,
     },
     car: {
       brand: orderDataFetched.car.brand,
@@ -352,4 +365,50 @@ export async function get_order_data_admin(orderId) {
   }
 
   return orderData;
+}
+
+export async function save_order(formData, carId) {
+  
+  let originalCarRef = null;
+  let dropoffPlaceRef = null;
+  let pickupPlaceRef = null;
+
+  let carData = await get_car_data_admin(carId, ['brand', 'model']);
+
+  let result = null;
+
+  for (const index in formData) {
+    if (typeof formData[index] === 'string') {
+      formData[index] = formData[index].trim();
+    }
+  }
+
+  originalCarRef = await db.collection('cars').doc(carId);
+  dropoffPlaceRef = await db.collection('places').doc(formData.dropoff_place);
+  pickupPlaceRef = await db.collection('places').doc(formData.pickup_place);
+
+  result = await db.collection('orders').add({
+    car: {
+      brand: carData.brand,
+      license_plate: carData.license_plate,
+      model: carData.model,
+      price: carData.price
+    },
+    customer: {
+      email: formData.customer_email,
+      first_name: formData.customer_first_name,
+      last_name: formData.customer_last_name,
+      phone_number: formData.customer_phone_number
+    },
+    dropoff_datetime: formData.dropoff_datetime,
+    dropoff_place: dropoffPlaceRef,
+    original_car: originalCarRef,
+    pickup_datetime: formData.pickup_datetime,
+    pickup_place: pickupPlaceRef,
+    state: 'accepted',
+    created_at: new Date()
+  });
+
+  return result;
+
 }

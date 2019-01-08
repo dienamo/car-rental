@@ -98,7 +98,15 @@ export default class OrderDetailsAdmin extends React.Component {
                                                 <strong>Phone:</strong>
                                             </Col>
                                             <Col xs={{size: 8}}>
-                                                {this.state.orderData.customer.phone}
+                                                {this.state.orderData.customer.phone_number}
+                                            </Col>
+                                        </Row>
+                                        <Row className="pb-1">
+                                            <Col xs={{size: 4}}>
+                                                <strong>Order date:</strong>
+                                            </Col>
+                                            <Col xs={{size: 8}}>
+                                                {this.state.orderData.created_at}
                                             </Col>
                                         </Row>
                                     </Col>

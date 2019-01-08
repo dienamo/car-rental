@@ -9,12 +9,12 @@ import {
   NavItem,
   NavLink
 } from 'reactstrap';
-import firebase from 'firebase';
+//import firebase from 'firebase';
 
 import { library as faLibrary } from '@fortawesome/fontawesome-svg-core';
-import { faPlusCircle, faCarSide, faSpinner, faCheck, faTimesCircle, faEdit, faTrashAlt, faTimes, faListAlt, faSave, faBan } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faCarSide, faSpinner, faCheck, faCheckCircle, faTimesCircle, faEdit, faTrashAlt, faTimes, faListAlt, faSave, faBan } from '@fortawesome/free-solid-svg-icons';
 
-import { attachFirebaseToComponent } from '../helpers/helperFunctions.js';
+//import { attachFirebaseToComponent } from '../helpers/helperFunctions.js';
 
 import Administration from './Administration';
 import Homepage from './Homepage';
@@ -25,7 +25,6 @@ import CarPage from './CarPage';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
 class App extends React.Component {
 
   constructor(props) {
@@ -35,6 +34,7 @@ class App extends React.Component {
     faLibrary.add(faCarSide);
     faLibrary.add(faSpinner);
     faLibrary.add(faCheck);
+    faLibrary.add(faCheckCircle);
     faLibrary.add(faTimesCircle);
     faLibrary.add(faEdit);
     faLibrary.add(faTrashAlt);
@@ -50,7 +50,7 @@ class App extends React.Component {
 
   render() {
 
-    const AdministrationPage = attachFirebaseToComponent(Administration, firebase);
+    //const AdministrationPage = attachFirebaseToComponent(Administration, firebase);
 
     return (
       <HashRouter>
@@ -72,6 +72,9 @@ class App extends React.Component {
                 <NavItem>
                   <NavLink tag={RouterNavlink} to="/contact">Contact</NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink tag={RouterNavlink} to="/administration">Administration</NavLink>
+                </NavItem>
               </Nav>
             </Collapse>
           </Navbar>
@@ -80,7 +83,7 @@ class App extends React.Component {
               <Route exact path='/' component={Homepage} />
               <Route exact path="/about" component={About} />
               <Route exact path="/contact" component={Contact} />
-              <Route path='/administration' render={AdministrationPage} />
+              <Route path='/administration' component={Administration} />
               <Route exact path="/results" component={Results} />
               <Route exact path="/car/:carId" component={CarPage} />
             </Switch>

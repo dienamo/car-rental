@@ -86,8 +86,9 @@ export default class OrdersAdmin extends React.Component {
                     <tr key={orderData.id}>
                         <td>{orderData.car.license_plate}</td>
                         <td>{`${orderData.car.brand} ${orderData.car.model}`}</td>
-                        <td>{orderData.car.price} €</td>
+                        <td className="hide-listing-column">{orderData.car.price} €</td>
                         <td className="hide-listing-column">{`${orderData.customer.first_name} ${orderData.customer.last_name}`}</td>
+                        <td>{orderData.created_at}</td>
                         <td className="action-buttons-column text-nowrap">
                             <div className="big-screen-action-buttons">
                                 <Button onClick={e => this.handleShowOrderDetailsButtonClick(e, orderData.id)} className="listing-action-button-big-screen" color="info" size="sm"><FontAwesomeIcon icon="list-alt" />&nbsp;Details</Button>
@@ -118,8 +119,9 @@ export default class OrdersAdmin extends React.Component {
                                         <tr>
                                             <th>License Plate</th>
                                             <th>Car model</th>
-                                            <th>Price</th>
+                                            <th className="hide-listing-column">Price</th>
                                             <th className="hide-listing-column">Customer name</th>
+                                            <th>Order date</th>
                                             <th className="action-buttons-column">Actions</th>
                                         </tr>
                                     </thead>
